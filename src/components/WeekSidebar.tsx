@@ -25,9 +25,9 @@ export default function WeekSidebar({ weeks, onWeekSelect, bootcampTitle }: Week
             <li key={week.number}>
               <button
                 onClick={() => onWeekSelect(week.number)}
-                className={`w-full p-4 rounded-lg transition-all relative hover:bg-gray-50 ${
+                className={`w-full p-4 rounded-lg transition-all transform active:scale-95 hover:bg-gray-50 ${
                   week.isCurrent 
-                    ? 'border-2 border-green-500 bg-green-50'
+                    ? 'border-2 border-green-500 bg-green-50 hover:bg-green-100'
                     : 'border border-gray-200'
                 }`}
               >

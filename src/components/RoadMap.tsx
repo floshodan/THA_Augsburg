@@ -85,6 +85,7 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
 
   // Funktion zur Bestimmung der Rahmenfarbe
   const getBorderColor = (day: DayNode) => {
+    if (day.status === 'upcoming') return 'border-gray-200';
     if (day.status === 'current') return 'border-[#4B2E83]';
     return `border-${getColorClass(day.progress.percentage)}`;
   };
@@ -134,15 +135,21 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                       className={`node-button w-full transition-all ${
                         selectedNode === day.id ? 'scale-105' : ''
                       }`}
-                      onClick={() => setSelectedNode(selectedNode === day.id ? null : day.id)}
+                      onClick={() => day.status !== 'upcoming' && setSelectedNode(selectedNode === day.id ? null : day.id)}
+                      disabled={day.status === 'upcoming'}
                     >
                       <div
-                        className={`p-4 rounded-lg border-2 transition-all bg-white ${getBorderColor(day)}`}
+                        className={`p-4 rounded-lg border-2 transition-all ${
+                          day.status === 'upcoming' ? 'bg-gray-50 opacity-60 cursor-not-allowed' : 'bg-white'
+                        } ${getBorderColor(day)}`}
                       >
                         <div className={`text-lg font-semibold mb-2 ${
-                          day.status === 'current' ? 'text-[#4B2E83]' : 'text-gray-900'
+                          day.status === 'current' ? 'text-[#4B2E83]' : 
+                          day.status === 'upcoming' ? 'text-gray-400' : 'text-gray-900'
                         }`}>Tag {day.dayNumber}</div>
-                        <h3 className="font-medium mb-1 text-gray-900">{day.title}</h3>
+                        <h3 className={`font-medium mb-1 ${
+                          day.status === 'upcoming' ? 'text-gray-400' : 'text-gray-900'
+                        }`}>{day.title}</h3>
                         
                         {/* Fortschrittsanzeige */}
                         <div className="mt-2">
@@ -152,12 +159,14 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                               style={{ width: `${day.progress.percentage}%` }}
                             />
                           </div>
-                          <div className="text-xs mt-1 text-gray-500">
+                          <div className={`text-xs mt-1 ${
+                            day.status === 'upcoming' ? 'text-gray-400' : 'text-gray-500'
+                          }`}>
                             {day.progress.completedTasks} von {day.progress.totalTasks} Aufgaben
                           </div>
                         </div>
 
-                        {selectedNode === day.id && (
+                        {selectedNode === day.id && day.status !== 'upcoming' && (
                           <div className="mt-4 space-y-2">
                             <p className="text-sm text-gray-500">
                               {day.description}

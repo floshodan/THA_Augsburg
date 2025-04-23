@@ -26,48 +26,45 @@ interface DayTemplate {
 }
 
 export default function Dashboard() {
-  const { currentWeek, bootcampWeeks, weekDays, bootcampTitle } = courseData;
+  const { currentWeek, currentDay, bootcampWeeks, weekDays, bootcampTitle } = courseData;
 
   // Generiere alle 35 Tage in der richtigen Reihenfolge
   const allDays = Array.from({ length: 35 }, (_, index) => {
     const weekIndex = Math.floor(index / 5);
     const dayInWeek = (index % 5) + 1;
     const week = bootcampWeeks[weekIndex];
-    const dayTemplate = weekDays[dayInWeek - 1] as DayTemplate;
+    const dayTemplate = weekDays[index] as DayTemplate;
 
+    // Berechne den absoluten Tag im Bootcamp (1-35)
+    const absoluteDayNumber = index + 1;
+    
     let status: DayStatus;
-    if (week.number < currentWeek) {
-      status = 'completed';
-    } else if (week.number === currentWeek) {
-      status = dayTemplate.status;
-    } else {
+    if (absoluteDayNumber === currentDay) {
+      status = 'current';
+    } else if (absoluteDayNumber > currentDay) {
       status = 'upcoming';
+    } else {
+      status = 'completed';
     }
 
     // Bestimme den Fortschritt basierend auf dem Status
     let progress: Progress;
-    if (status === 'completed') {
-      progress = {
-        completedTasks: dayTemplate.tasks.length,
-        totalTasks: dayTemplate.tasks.length,
-        percentage: 100
-      };
-    } else if (status === 'upcoming') {
+    if (status === 'upcoming') {
       progress = {
         completedTasks: 0,
         totalTasks: dayTemplate.tasks.length,
         percentage: 0
       };
     } else {
-      // Für den aktuellen Tag verwenden wir die Werte aus den Mock-Daten
+      // Für vergangene und aktuelle Tage verwenden wir die Werte aus den Mock-Daten
       progress = dayTemplate.progress;
     }
 
     return {
       ...dayTemplate,
-      id: index + 1,
+      id: absoluteDayNumber,
       weekNumber: week.number,
-      dayNumber: dayTemplate.dayNumber,
+      dayNumber: absoluteDayNumber,
       status,
       progress
     };

@@ -1,6 +1,7 @@
 {
   "bootcampTitle": "Web Development & AI",
   "currentWeek": 6,
+  "currentDay": 26,
   "status": {
     "COMPLETED": "completed",
     "CURRENT": "current",
@@ -65,8 +66,8 @@
       "status": "completed",
       "progress": {
         "completedTasks": 4,
-        "totalTasks": 8,
-        "percentage": 50
+        "totalTasks": 4,
+        "percentage": 100
       }
     },
     {
@@ -80,11 +81,11 @@
         "Flexbox Layout",
         "Responsive Design"
       ],
-      "status": "current",
+      "status": "completed",
       "progress": {
-        "completedTasks": 2,
+        "completedTasks": 4,
         "totalTasks": 4,
-        "percentage": 50
+        "percentage": 100
       }
     },
     {
@@ -98,11 +99,11 @@
         "CSS Variables",
         "CSS Frameworks"
       ],
-      "status": "upcoming",
+      "status": "completed",
       "progress": {
-        "completedTasks": 0,
+        "completedTasks": 4,
         "totalTasks": 4,
-        "percentage": 0
+        "percentage": 100
       }
     },
     {
@@ -116,6 +117,438 @@
         "GitHub Workflow",
         "Team Collaboration"
       ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 5,
+        "totalTasks": 8,
+        "percentage": 62.5
+      }
+    },
+    {
+      "id": 5,
+      "dayNumber": 5,
+      "title": "Projekt Woche 1",
+      "description": "Wochenprojekt: Responsive Website",
+      "tasks": [
+        "Wireframing",
+        "HTML Struktur",
+        "CSS Styling",
+        "Git Deployment"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 6,
+      "dayNumber": 1,
+      "title": "JavaScript Einführung",
+      "description": "Grundlagen der Programmierung mit JavaScript",
+      "tasks": [
+        "Variablen & Datentypen",
+        "Operatoren & Ausdrücke",
+        "Kontrollstrukturen",
+        "Funktionen"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 7,
+      "dayNumber": 2,
+      "title": "Arrays & Objekte",
+      "description": "Arbeiten mit komplexen Datentypen",
+      "tasks": [
+        "Array Methoden",
+        "Objekt-Literale",
+        "JSON",
+        "Übungsaufgaben"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 8,
+      "dayNumber": 3,
+      "title": "DOM Manipulation",
+      "description": "Interaktion mit dem Document Object Model",
+      "tasks": [
+        "DOM Selektoren",
+        "Event Handling",
+        "DOM Manipulation",
+        "Mini-Projekt"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 9,
+      "dayNumber": 4,
+      "title": "JavaScript Patterns",
+      "description": "Wichtige Programmierkonzepte",
+      "tasks": [
+        "Closures",
+        "Hoisting",
+        "Scope",
+        "this Keyword"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 10,
+      "dayNumber": 5,
+      "title": "Projekt Woche 2",
+      "description": "Interaktive Webanwendung",
+      "tasks": [
+        "Projektplanung",
+        "DOM Manipulation",
+        "Event Handling",
+        "Code Review"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 11,
+      "dayNumber": 1,
+      "title": "ES6+ Features",
+      "description": "Moderne JavaScript Features",
+      "tasks": [
+        "Arrow Functions",
+        "Destructuring",
+        "Spread/Rest",
+        "Template Literals"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 12,
+      "dayNumber": 2,
+      "title": "Asynchrone Programmierung",
+      "description": "Promises und Async/Await",
+      "tasks": [
+        "Callbacks",
+        "Promises",
+        "Async/Await",
+        "Error Handling"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 13,
+      "dayNumber": 3,
+      "title": "API Integration",
+      "description": "Arbeiten mit externen APIs",
+      "tasks": [
+        "Fetch API",
+        "REST APIs",
+        "API Authentication",
+        "Data Handling"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 14,
+      "dayNumber": 4,
+      "title": "Moderne JavaScript Tools",
+      "description": "Entwicklungswerkzeuge und Best Practices",
+      "tasks": [
+        "NPM & Package Management",
+        "Bundling & Transpiling",
+        "ESLint & Prettier",
+        "Testing"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 15,
+      "dayNumber": 5,
+      "title": "Projekt Woche 3",
+      "description": "API-basierte Anwendung",
+      "tasks": [
+        "API Integration",
+        "Asynchrone Datenverarbeitung",
+        "Error Handling",
+        "Code Review"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 16,
+      "dayNumber": 1,
+      "title": "React Einführung",
+      "description": "Grundlagen von React",
+      "tasks": [
+        "React Konzepte",
+        "JSX Syntax",
+        "Components",
+        "Props"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 17,
+      "dayNumber": 2,
+      "title": "React Components",
+      "description": "Komponenten erstellen und wiederverwenden",
+      "tasks": [
+        "Functional Components",
+        "Class Components",
+        "Component Composition",
+        "Props Drilling"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 18,
+      "dayNumber": 3,
+      "title": "React Events",
+      "description": "Event Handling in React",
+      "tasks": [
+        "Event Handling",
+        "Form Handling",
+        "Controlled Components",
+        "Form Validation"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 19,
+      "dayNumber": 4,
+      "title": "React Lifecycle",
+      "description": "Komponenten-Lebenszyklus",
+      "tasks": [
+        "Lifecycle Methods",
+        "useEffect",
+        "Cleanup Functions",
+        "Performance"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 20,
+      "dayNumber": 5,
+      "title": "Projekt Woche 4",
+      "description": "React Single Page Application",
+      "tasks": [
+        "Component Architecture",
+        "State Management",
+        "Routing",
+        "Code Review"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 21,
+      "dayNumber": 1,
+      "title": "React State",
+      "description": "State Management in React",
+      "tasks": [
+        "useState",
+        "State Updates",
+        "State Patterns",
+        "State Lifting"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 22,
+      "dayNumber": 2,
+      "title": "React Hooks",
+      "description": "Moderne React Hooks",
+      "tasks": [
+        "useEffect",
+        "useContext",
+        "useReducer",
+        "Custom Hooks"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 23,
+      "dayNumber": 3,
+      "title": "Context API",
+      "description": "Global State Management",
+      "tasks": [
+        "Context Creation",
+        "Context Provider",
+        "Context Consumer",
+        "Performance"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 24,
+      "dayNumber": 4,
+      "title": "Advanced State",
+      "description": "Fortgeschrittene State Management Techniken",
+      "tasks": [
+        "State Patterns",
+        "State Machines",
+        "Immer",
+        "Testing"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 25,
+      "dayNumber": 5,
+      "title": "Projekt Woche 5",
+      "description": "State Management Projekt",
+      "tasks": [
+        "State Architecture",
+        "Global State",
+        "Performance",
+        "Code Review"
+      ],
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 4,
+        "percentage": 100
+      }
+    },
+    {
+      "id": 26,
+      "dayNumber": 1,
+      "title": "Node.js Einführung",
+      "description": "Grundlagen von Node.js",
+      "tasks": [
+        "Node.js Setup",
+        "NPM & Packages",
+        "CommonJS Modules",
+        "Node.js Basics"
+      ],
+      "status": "current",
+      "progress": {
+        "completedTasks": 3,
+        "totalTasks": 4,
+        "percentage": 75
+      }
+    },
+    {
+      "id": 27,
+      "dayNumber": 2,
+      "title": "Express.js",
+      "description": "Web Framework für Node.js",
+      "tasks": [
+        "Express Setup",
+        "Routing",
+        "Middleware",
+        "Error Handling"
+      ],
+      "status": "current",
+      "progress": {
+        "completedTasks": 2,
+        "totalTasks": 4,
+        "percentage": 50
+      }
+    },
+    {
+      "id": 28,
+      "dayNumber": 3,
+      "title": "REST APIs",
+      "description": "RESTful API Design",
+      "tasks": [
+        "API Design",
+        "CRUD Operations",
+        "Request/Response",
+        "API Testing"
+      ],
       "status": "upcoming",
       "progress": {
         "completedTasks": 0,
@@ -124,15 +557,123 @@
       }
     },
     {
-      "id": 5,
-      "dayNumber": 5,
-      "title": "Projekt",
-      "description": "Wochenprojekt: Responsive Website",
+      "id": 29,
+      "dayNumber": 4,
+      "title": "Authentication",
+      "description": "Benutzerauthentifizierung",
       "tasks": [
-        "Wireframing",
-        "HTML Struktur",
-        "CSS Styling",
-        "Git Deployment"
+        "JWT",
+        "Session Management",
+        "Security",
+        "Testing"
+      ],
+      "status": "upcoming",
+      "progress": {
+        "completedTasks": 0,
+        "totalTasks": 4,
+        "percentage": 0
+      }
+    },
+    {
+      "id": 30,
+      "dayNumber": 5,
+      "title": "Projekt Woche 6",
+      "description": "Backend API Projekt",
+      "tasks": [
+        "API Design",
+        "Authentication",
+        "Testing",
+        "Deployment"
+      ],
+      "status": "upcoming",
+      "progress": {
+        "completedTasks": 0,
+        "totalTasks": 4,
+        "percentage": 0
+      }
+    },
+    {
+      "id": 31,
+      "dayNumber": 1,
+      "title": "SQL Grundlagen",
+      "description": "Einführung in SQL",
+      "tasks": [
+        "SQL Syntax",
+        "CRUD Operations",
+        "Joins",
+        "Indexes"
+      ],
+      "status": "upcoming",
+      "progress": {
+        "completedTasks": 0,
+        "totalTasks": 4,
+        "percentage": 0
+      }
+    },
+    {
+      "id": 32,
+      "dayNumber": 2,
+      "title": "MongoDB",
+      "description": "NoSQL Datenbanken",
+      "tasks": [
+        "MongoDB Setup",
+        "CRUD Operations",
+        "Aggregation",
+        "Indexes"
+      ],
+      "status": "upcoming",
+      "progress": {
+        "completedTasks": 0,
+        "totalTasks": 4,
+        "percentage": 0
+      }
+    },
+    {
+      "id": 33,
+      "dayNumber": 3,
+      "title": "ORM & ODM",
+      "description": "Object-Relational Mapping",
+      "tasks": [
+        "Sequelize",
+        "Mongoose",
+        "Migrations",
+        "Testing"
+      ],
+      "status": "upcoming",
+      "progress": {
+        "completedTasks": 0,
+        "totalTasks": 4,
+        "percentage": 0
+      }
+    },
+    {
+      "id": 34,
+      "dayNumber": 4,
+      "title": "Datenbank Design",
+      "description": "Datenbank-Design und Optimierung",
+      "tasks": [
+        "Schema Design",
+        "Relationships",
+        "Performance",
+        "Scaling"
+      ],
+      "status": "upcoming",
+      "progress": {
+        "completedTasks": 0,
+        "totalTasks": 4,
+        "percentage": 0
+      }
+    },
+    {
+      "id": 35,
+      "dayNumber": 5,
+      "title": "Projekt Woche 7",
+      "description": "Full-Stack Projekt",
+      "tasks": [
+        "Database Design",
+        "API Integration",
+        "Testing",
+        "Deployment"
       ],
       "status": "upcoming",
       "progress": {
