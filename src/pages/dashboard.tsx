@@ -1,118 +1,162 @@
+'use client';
+
+import { useState } from 'react';
 import Navbar from '../components/Navbar';
+import WeekSidebar from '../components/WeekSidebar';
+import RoadMap from '../components/RoadMap';
+import ChatBot from '../components/ChatBot';
+import Footer from '../components/Footer';
+
+// Bootcamp Wochen
+const bootcampWeeks = [
+  { 
+    number: 1, 
+    title: 'Web Grundlagen', 
+    subtitle: 'HTML, CSS & Git',
+    isActive: true, 
+    isCompleted: false 
+  },
+  { 
+    number: 2, 
+    title: 'JavaScript Basics', 
+    subtitle: 'Syntax & DOM',
+    isActive: false, 
+    isCompleted: false 
+  },
+  { 
+    number: 3, 
+    title: 'JavaScript Advanced', 
+    subtitle: 'APIs & Async',
+    isActive: false, 
+    isCompleted: false 
+  },
+  { 
+    number: 4, 
+    title: 'React Fundamentals', 
+    subtitle: 'Components & Props',
+    isActive: false, 
+    isCompleted: false 
+  },
+  { 
+    number: 5, 
+    title: 'React State & Hooks', 
+    subtitle: 'State Management',
+    isActive: false, 
+    isCompleted: false 
+  },
+  { 
+    number: 6, 
+    title: 'Backend Basics', 
+    subtitle: 'Node.js & Express',
+    isActive: false, 
+    isCompleted: false 
+  },
+  { 
+    number: 7, 
+    title: 'Datenbanken', 
+    subtitle: 'SQL & MongoDB',
+    isActive: false, 
+    isCompleted: false 
+  },
+  { 
+    number: 8, 
+    title: 'Abschlussprojekt', 
+    subtitle: 'Fullstack App',
+    isActive: false, 
+    isCompleted: false 
+  }
+];
+
+// Tage der aktuellen Woche
+const weekDays = [
+  {
+    id: 1,
+    title: 'HTML Grundlagen',
+    description: 'Einführung in HTML5 und semantische Elemente',
+    tasks: [
+      'HTML Dokumentstruktur',
+      'Semantische Tags',
+      'Formulare & Validierung',
+      'Übungsprojekt: Portfolio-Seite'
+    ],
+    status: 'completed' as const
+  },
+  {
+    id: 2,
+    title: 'CSS Basics',
+    description: 'Styling und Layout-Grundlagen',
+    tasks: [
+      'CSS Selektoren',
+      'Box Model',
+      'Flexbox Layout',
+      'Responsive Design'
+    ],
+    status: 'current' as const
+  },
+  {
+    id: 3,
+    title: 'CSS Advanced',
+    description: 'Fortgeschrittene Styling-Techniken',
+    tasks: [
+      'CSS Grid',
+      'Animationen',
+      'CSS Variables',
+      'CSS Frameworks'
+    ],
+    status: 'upcoming' as const
+  },
+  {
+    id: 4,
+    title: 'Git & GitHub',
+    description: 'Versionskontrolle und Zusammenarbeit',
+    tasks: [
+      'Git Grundlagen',
+      'Branching & Merging',
+      'GitHub Workflow',
+      'Team Collaboration'
+    ],
+    status: 'upcoming' as const
+  },
+  {
+    id: 5,
+    title: 'Projekt',
+    description: 'Wochenprojekt: Responsive Website',
+    tasks: [
+      'Wireframing',
+      'HTML Struktur',
+      'CSS Styling',
+      'Git Deployment'
+    ],
+    status: 'upcoming' as const
+  }
+];
 
 export default function Dashboard() {
+  const [selectedWeek, setSelectedWeek] = useState(1);
+
+  const handleWeekSelect = (weekNumber: number) => {
+    setSelectedWeek(weekNumber);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       
-      <main className="py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Willkommensbereich */}
-          <div className="bg-[#4B2E83] rounded-lg shadow-lg p-6 text-white mb-8">
-            <h1 className="text-2xl font-bold mb-2">Willkommen im Bootcamp!</h1>
-            <p className="text-gray-100">Dein Weg zum Entwickler beginnt hier.</p>
-          </div>
+      <div className="flex h-[calc(100vh-64px-56px)]">
+        {/* Sidebar */}
+        <WeekSidebar weeks={bootcampWeeks} onWeekSelect={handleWeekSelect} />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Fortschritt */}
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-xl font-semibold mb-4">Dein Fortschritt</h2>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span>HTML & CSS Basics</span>
-                    <span>80%</span>
-                  </div>
-                  <div className="h-2 bg-gray-200 rounded">
-                    <div className="h-2 bg-green-500 rounded" style={{ width: '80%' }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span>JavaScript Fundamentals</span>
-                    <span>60%</span>
-                  </div>
-                  <div className="h-2 bg-gray-200 rounded">
-                    <div className="h-2 bg-green-500 rounded" style={{ width: '60%' }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span>React Basics</span>
-                    <span>40%</span>
-                  </div>
-                  <div className="h-2 bg-gray-200 rounded">
-                    <div className="h-2 bg-green-500 rounded" style={{ width: '40%' }}></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {/* Main Content */}
+        <main className="flex-1 p-6 overflow-auto">
+          <RoadMap days={weekDays} weekNumber={selectedWeek} />
+        </main>
+      </div>
 
-            {/* Nächste Aufgaben */}
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-xl font-semibold mb-4">Nächste Aufgaben</h2>
-              <ul className="space-y-3">
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-[#4B2E83] rounded-full mr-2"></span>
-                  <span>JavaScript Arrays & Objects</span>
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-[#4B2E83] rounded-full mr-2"></span>
-                  <span>DOM Manipulation</span>
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-[#4B2E83] rounded-full mr-2"></span>
-                  <span>Event Handling</span>
-                </li>
-              </ul>
-              <button className="mt-4 text-[#4B2E83] hover:text-[#3b2566] font-medium">
-                Alle Aufgaben anzeigen →
-              </button>
-            </div>
+      {/* ChatBot */}
+      <ChatBot />
 
-            {/* Ressourcen */}
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-xl font-semibold mb-4">Lernressourcen</h2>
-              <div className="space-y-4">
-                <a href="#" className="block p-3 border border-gray-200 rounded hover:border-[#4B2E83] transition-colors">
-                  <h3 className="font-medium">JavaScript Guide</h3>
-                  <p className="text-sm text-gray-500">Umfassende Einführung in JavaScript</p>
-                </a>
-                <a href="#" className="block p-3 border border-gray-200 rounded hover:border-[#4B2E83] transition-colors">
-                  <h3 className="font-medium">CSS Flexbox Tutorial</h3>
-                  <p className="text-sm text-gray-500">Moderne Layouts mit Flexbox</p>
-                </a>
-                <a href="#" className="block p-3 border border-gray-200 rounded hover:border-[#4B2E83] transition-colors">
-                  <h3 className="font-medium">React Grundlagen</h3>
-                  <p className="text-sm text-gray-500">Erste Schritte mit React</p>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Upcoming Events */}
-          <div className="mt-8 bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-4">Kommende Events</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="border border-gray-200 rounded-lg p-4">
-                <div className="text-[#4B2E83] font-semibold mb-2">Mo, 15. März</div>
-                <h3 className="font-medium">JavaScript Workshop</h3>
-                <p className="text-sm text-gray-500">Praktische Übungen zu Arrays und Objekten</p>
-              </div>
-              <div className="border border-gray-200 rounded-lg p-4">
-                <div className="text-[#4B2E83] font-semibold mb-2">Mi, 17. März</div>
-                <h3 className="font-medium">Code Review Session</h3>
-                <p className="text-sm text-gray-500">Gemeinsame Code-Besprechung</p>
-              </div>
-              <div className="border border-gray-200 rounded-lg p-4">
-                <div className="text-[#4B2E83] font-semibold mb-2">Fr, 19. März</div>
-                <h3 className="font-medium">Tech Talk: React</h3>
-                <p className="text-sm text-gray-500">Einführung in React Hooks</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 } 
