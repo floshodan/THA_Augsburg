@@ -9,6 +9,12 @@ import courseData from '../mockData/courseData.json';
 
 type DayStatus = 'completed' | 'current' | 'upcoming';
 
+interface Progress {
+  completedTasks: number;
+  totalTasks: number;
+  percentage: number;
+}
+
 interface DayTemplate {
   id: number;
   dayNumber: number;
@@ -16,6 +22,7 @@ interface DayTemplate {
   description: string;
   tasks: string[];
   status: DayStatus;
+  progress: Progress;
 }
 
 export default function Dashboard() {
@@ -37,12 +44,32 @@ export default function Dashboard() {
       status = 'upcoming';
     }
 
+    // Bestimme den Fortschritt basierend auf dem Status
+    let progress: Progress;
+    if (status === 'completed') {
+      progress = {
+        completedTasks: dayTemplate.tasks.length,
+        totalTasks: dayTemplate.tasks.length,
+        percentage: 100
+      };
+    } else if (status === 'upcoming') {
+      progress = {
+        completedTasks: 0,
+        totalTasks: dayTemplate.tasks.length,
+        percentage: 0
+      };
+    } else {
+      // Für den aktuellen Tag verwenden wir die Werte aus den Mock-Daten
+      progress = dayTemplate.progress;
+    }
+
     return {
       ...dayTemplate,
       id: index + 1,
       weekNumber: week.number,
       dayNumber: dayTemplate.dayNumber,
-      status
+      status,
+      progress
     };
   });
 

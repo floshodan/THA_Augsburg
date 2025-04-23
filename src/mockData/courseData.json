@@ -62,7 +62,12 @@
         "Formulare & Validierung",
         "Übungsprojekt: Portfolio-Seite"
       ],
-      "status": "completed"
+      "status": "completed",
+      "progress": {
+        "completedTasks": 4,
+        "totalTasks": 8,
+        "percentage": 50
+      }
     },
     {
       "id": 2,
@@ -75,7 +80,12 @@
         "Flexbox Layout",
         "Responsive Design"
       ],
-      "status": "current"
+      "status": "current",
+      "progress": {
+        "completedTasks": 2,
+        "totalTasks": 4,
+        "percentage": 50
+      }
     },
     {
       "id": 3,
@@ -88,7 +98,12 @@
         "CSS Variables",
         "CSS Frameworks"
       ],
-      "status": "upcoming"
+      "status": "upcoming",
+      "progress": {
+        "completedTasks": 0,
+        "totalTasks": 4,
+        "percentage": 0
+      }
     },
     {
       "id": 4,
@@ -101,7 +116,12 @@
         "GitHub Workflow",
         "Team Collaboration"
       ],
-      "status": "upcoming"
+      "status": "upcoming",
+      "progress": {
+        "completedTasks": 0,
+        "totalTasks": 4,
+        "percentage": 0
+      }
     },
     {
       "id": 5,
@@ -114,7 +134,12 @@
         "CSS Styling",
         "Git Deployment"
       ],
-      "status": "upcoming"
+      "status": "upcoming",
+      "progress": {
+        "completedTasks": 0,
+        "totalTasks": 4,
+        "percentage": 0
+      }
     }
   ]
 } 

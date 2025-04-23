@@ -2,6 +2,12 @@
 
 import { useState, useRef, useEffect } from 'react';
 
+interface Progress {
+  completedTasks: number;
+  totalTasks: number;
+  percentage: number;
+}
+
 interface DayNode {
   id: number;
   weekNumber: number;
@@ -10,6 +16,7 @@ interface DayNode {
   description: string;
   tasks: string[];
   status: 'completed' | 'current' | 'upcoming';
+  progress: Progress;
 }
 
 interface RoadMapProps {
@@ -20,22 +27,6 @@ interface RoadMapProps {
 
 export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMapProps) {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
-
-  // Calculate progress
-  const totalTasks = days.reduce((acc, day) => acc + day.tasks.length, 0);
-  const completedTasks = days.reduce((acc, day) => {
-    if (day.status === 'completed') {
-      return acc + day.tasks.length;
-    }
-    return acc;
-  }, 0);
-  const progressPercentage = (completedTasks / totalTasks) * 100;
-
-  // Placeholder feedback data
-  const feedbackData = {
-    performance: 'Gut',
-    comment: 'Du machst sehr gute Fortschritte! Besonders deine HTML/CSS Kenntnisse sind bereits sehr solide.'
-  };
   const containerRef = useRef<HTMLDivElement>(null);
   const [path, setPath] = useState<string>('');
 
@@ -83,6 +74,26 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
     return acc;
   }, {} as Record<number, typeof days>);
 
+  // Funktion zur Bestimmung der Fortschrittsfarbe (ohne 'bg-' Präfix)
+  const getColorClass = (percentage: number) => {
+    if (percentage === 100) return 'green-500';
+    if (percentage >= 75) return 'green-400';
+    if (percentage >= 50) return 'yellow-400';
+    if (percentage >= 25) return 'orange-400';
+    return 'red-500';
+  };
+
+  // Funktion zur Bestimmung der Rahmenfarbe
+  const getBorderColor = (day: DayNode) => {
+    if (day.status === 'current') return 'border-[#4B2E83]';
+    return `border-${getColorClass(day.progress.percentage)}`;
+  };
+
+  // Funktion zur Bestimmung der Fortschrittsbalkenfarbe
+  const getProgressColor = (percentage: number) => {
+    return `bg-${getColorClass(percentage)}`;
+  };
+
   return (
     <div className="flex-1 p-6 bg-white rounded-lg shadow-lg">
       {showTitle && (
@@ -91,39 +102,6 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
           <p className="text-gray-600">Klicke auf einen Tag für mehr Details</p>
         </div>
       )}
-
-      {/* Progress Section */}
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium text-gray-700">Fortschritt</span>
-          <span className="text-sm font-medium text-gray-700">
-            {completedTasks} von {totalTasks} Aufgaben erledigt
-          </span>
-        </div>
-        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-[#4B2E83] transition-all duration-500 ease-out"
-            style={{ width: `${progressPercentage}%` }}
-          />
-        </div>
-      </div>
-
-      {/* Simple Feedback Box */}
-      <div className="mb-6 bg-white rounded-lg p-4 border border-gray-200">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-medium text-gray-900">Your Feedback</h3>
-          <span className={`px-2 py-1 rounded-full text-sm ${
-            feedbackData.performance === 'Gut' 
-              ? 'bg-green-100 text-green-800'
-              : feedbackData.performance === 'Mittel'
-              ? 'bg-yellow-100 text-yellow-800'
-              : 'bg-red-100 text-red-800'
-          }`}>
-            {feedbackData.performance}
-          </span>
-        </div>
-        <p className="mt-2 text-gray-900 text-sm">{feedbackData.comment}</p>
-      </div>
 
       <div ref={containerRef} className="relative">
         {/* Verbindungslinien */}
@@ -159,29 +137,39 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                       onClick={() => setSelectedNode(selectedNode === day.id ? null : day.id)}
                     >
                       <div
-                        className={`p-4 rounded-lg border-2 transition-all ${
-                          day.status === 'completed'
-                            ? 'border-green-500 bg-green-50'
-                            : day.status === 'current'
-                            ? 'border-[#4B2E83] bg-[#4B2E83] text-white'
-                            : 'border-gray-200 bg-white'
-                        }`}
+                        className={`p-4 rounded-lg border-2 transition-all bg-white ${getBorderColor(day)}`}
                       >
-                        <div className="text-lg font-semibold mb-2">Tag {day.dayNumber}</div>
-                        <h3 className="font-medium mb-1">{day.title}</h3>
+                        <div className={`text-lg font-semibold mb-2 ${
+                          day.status === 'current' ? 'text-[#4B2E83]' : 'text-gray-900'
+                        }`}>Tag {day.dayNumber}</div>
+                        <h3 className="font-medium mb-1 text-gray-900">{day.title}</h3>
+                        
+                        {/* Fortschrittsanzeige */}
+                        <div className="mt-2">
+                          <div className="w-full bg-gray-100 rounded-full h-2.5">
+                            <div 
+                              className={`h-2.5 rounded-full ${getProgressColor(day.progress.percentage)}`}
+                              style={{ width: `${day.progress.percentage}%` }}
+                            />
+                          </div>
+                          <div className="text-xs mt-1 text-gray-500">
+                            {day.progress.completedTasks} von {day.progress.totalTasks} Aufgaben
+                          </div>
+                        </div>
+
                         {selectedNode === day.id && (
                           <div className="mt-4 space-y-2">
-                            <p className={`text-sm ${
-                              day.status === 'current' ? 'text-gray-100' : 'text-gray-500'
-                            }`}>
+                            <p className="text-sm text-gray-500">
                               {day.description}
                             </p>
-                            <ul className={`text-sm space-y-1 mt-2 ${
-                              day.status === 'current' ? 'text-gray-100' : 'text-gray-500'
-                            }`}>
+                            <ul className="text-sm space-y-1 mt-2 text-gray-500">
                               {day.tasks.map((task, index) => (
                                 <li key={index} className="flex items-center">
-                                  <span className="mr-2">•</span>
+                                  <span className={`mr-2 ${
+                                    index < day.progress.completedTasks ? 'text-green-500' : 'text-gray-400'
+                                  }`}>
+                                    {index < day.progress.completedTasks ? '✓' : '•'}
+                                  </span>
                                   {task}
                                 </li>
                               ))}
