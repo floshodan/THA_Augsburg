@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import DailyFeedback from './DailyFeedback';
 
 interface Progress {
   completedTasks: number;
@@ -29,6 +30,7 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [path, setPath] = useState<string>('');
+  const [selectedNodePosition, setSelectedNodePosition] = useState<{ top: number; left: number; width: number } | null>(null);
 
   // Berechne den SVG-Pfad basierend auf den Node-Positionen
   useEffect(() => {
@@ -63,6 +65,24 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
     }
     setPath(pathD);
   }, [days]);
+
+  // Update position when selected node changes
+  useEffect(() => {
+    if (selectedNode && containerRef.current) {
+      const nodeElement = containerRef.current.querySelector(`[data-node-id="${selectedNode}"]`);
+      if (nodeElement) {
+        const rect = nodeElement.getBoundingClientRect();
+        const containerRect = containerRef.current.getBoundingClientRect();
+        setSelectedNodePosition({
+          top: rect.bottom - containerRect.top,
+          left: 0,
+          width: containerRect.width
+        });
+      }
+    } else {
+      setSelectedNodePosition(null);
+    }
+  }, [selectedNode]);
 
   // Gruppiere Tage nach Wochen
   const weekGroups = days.reduce((acc, day) => {
@@ -132,6 +152,7 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                 {weekDays.map((day) => (
                   <div key={day.id} className="relative">
                     <button
+                      data-node-id={day.id}
                       className={`node-button w-full transition-all ${
                         selectedNode === day.id ? 'scale-105' : ''
                       }`}
@@ -165,26 +186,6 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                             {day.progress.completedTasks} von {day.progress.totalTasks} Aufgaben
                           </div>
                         </div>
-
-                        {selectedNode === day.id && day.status !== 'upcoming' && (
-                          <div className="mt-4 space-y-2">
-                            <p className="text-sm text-gray-500">
-                              {day.description}
-                            </p>
-                            <ul className="text-sm space-y-1 mt-2 text-gray-500">
-                              {day.tasks.map((task, index) => (
-                                <li key={index} className="flex items-center">
-                                  <span className={`mr-2 ${
-                                    index < day.progress.completedTasks ? 'text-green-500' : 'text-gray-400'
-                                  }`}>
-                                    {index < day.progress.completedTasks ? '✓' : '•'}
-                                  </span>
-                                  {task}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
                       </div>
                     </button>
                   </div>
@@ -193,6 +194,23 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
             </div>
           ))}
         </div>
+
+        {/* Feedback Overlay */}
+        {selectedNode && selectedNodePosition && (
+          <div 
+            className="absolute z-10"
+            style={{
+              top: `${selectedNodePosition.top}px`,
+              left: `${selectedNodePosition.left}px`,
+              width: `${selectedNodePosition.width}px`
+            }}
+          >
+            <DailyFeedback
+              day={days.find(day => day.id === selectedNode)!}
+              onClose={() => setSelectedNode(null)}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
