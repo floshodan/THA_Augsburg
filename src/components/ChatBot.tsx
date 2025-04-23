@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { FaQuestionCircle } from 'react-icons/fa';
 
 interface Message {
   id: number;
@@ -41,25 +42,31 @@ export default function ChatBot() {
   };
 
   return (
-    <div
-      className={`fixed bottom-0 right-4 w-96 bg-white rounded-t-lg shadow-xl transition-all duration-300 ${
-        isMinimized ? 'h-12' : 'h-[500px]'
-      }`}
-    >
-      {/* Header */}
-      <div
-        className="p-4 bg-[#4B2E83] text-white rounded-t-lg cursor-pointer flex justify-between items-center"
-        onClick={() => setIsMinimized(!isMinimized)}
+    <>
+      {/* Minimized State - Always visible */}
+      <button
+        onClick={() => setIsMinimized(false)}
+        className="fixed bottom-20 right-4 w-12 h-12 bg-[#4B2E83] text-white rounded-full shadow-lg flex items-center justify-center hover:bg-[#3b2566] transition-colors z-50"
+        title="Frag deinen Lehrer"
       >
-        <h3 className="font-medium">Frag deinen Lehrer</h3>
-        <button className="text-white hover:text-gray-200">
-          {isMinimized ? '▲' : '▼'}
-        </button>
-      </div>
+        <FaQuestionCircle className="w-6 h-6" />
+      </button>
 
-      {/* Chat Container */}
+      {/* Expanded State - Only visible when not minimized */}
       {!isMinimized && (
-        <>
+        <div className="fixed bottom-20 right-4 w-96 bg-white rounded-t-lg shadow-xl z-50">
+          {/* Header */}
+          <div
+            className="p-4 bg-[#4B2E83] text-white rounded-t-lg cursor-pointer flex justify-between items-center"
+            onClick={() => setIsMinimized(true)}
+          >
+            <h3 className="font-medium">Frag deinen Lehrer</h3>
+            <button className="text-white hover:text-gray-200">
+              ▼
+            </button>
+          </div>
+
+          {/* Chat Container */}
           <div className="p-4 h-[400px] overflow-y-auto">
             {messages.map(message => (
               <div
@@ -102,8 +109,8 @@ export default function ChatBot() {
               </button>
             </div>
           </form>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 } 
