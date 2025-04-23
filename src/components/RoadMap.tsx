@@ -18,6 +18,16 @@ interface RoadMapProps {
 export default function RoadMap({ days, weekNumber }: RoadMapProps) {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
 
+  // Calculate progress
+  const totalTasks = days.reduce((acc, day) => acc + day.tasks.length, 0);
+  const completedTasks = days.reduce((acc, day) => {
+    if (day.status === 'completed') {
+      return acc + day.tasks.length;
+    }
+    return acc;
+  }, 0);
+  const progressPercentage = (completedTasks / totalTasks) * 100;
+
   // Placeholder feedback data
   const feedbackData = {
     performance: 'Gut',
@@ -29,6 +39,22 @@ export default function RoadMap({ days, weekNumber }: RoadMapProps) {
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Dein Wochenplan</h2>
         <p className="text-gray-600">Klicke auf einen Tag für mehr Details</p>
+      </div>
+
+      {/* Progress Section */}
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-sm font-medium text-gray-700">Fortschritt</span>
+          <span className="text-sm font-medium text-gray-700">
+            {completedTasks} von {totalTasks} Aufgaben erledigt
+          </span>
+        </div>
+        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div 
+            className="h-full bg-[#4B2E83] transition-all duration-500 ease-out"
+            style={{ width: `${progressPercentage}%` }}
+          />
+        </div>
       </div>
 
       {/* Simple Feedback Box */}
