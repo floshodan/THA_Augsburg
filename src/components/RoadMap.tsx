@@ -18,11 +18,34 @@ interface RoadMapProps {
 export default function RoadMap({ days, weekNumber }: RoadMapProps) {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
 
+  // Placeholder feedback data
+  const feedbackData = {
+    performance: 'Gut',
+    comment: 'Du machst sehr gute Fortschritte! Besonders deine HTML/CSS Kenntnisse sind bereits sehr solide.'
+  };
+
   return (
     <div className="flex-1 p-6 bg-white rounded-lg shadow-lg">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Dein Wochenplan</h2>
         <p className="text-gray-600">Klicke auf einen Tag für mehr Details</p>
+      </div>
+
+      {/* Simple Feedback Box */}
+      <div className="mb-6 bg-white rounded-lg p-4 border border-gray-200">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-medium text-gray-900">Your Feedback</h3>
+          <span className={`px-2 py-1 rounded-full text-sm ${
+            feedbackData.performance === 'Gut' 
+              ? 'bg-green-100 text-green-800'
+              : feedbackData.performance === 'Mittel'
+              ? 'bg-yellow-100 text-yellow-800'
+              : 'bg-red-100 text-red-800'
+          }`}>
+            {feedbackData.performance}
+          </span>
+        </div>
+        <p className="mt-2 text-gray-900 text-sm">{feedbackData.comment}</p>
       </div>
 
       <div className="relative min-h-[400px]">
