@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Navbar from '../components/Navbar';
 import WeekSidebar from '../components/WeekSidebar';
 import RoadMap from '../components/RoadMap';
@@ -55,13 +55,6 @@ const bootcampWeeks = [
     number: 7, 
     title: 'Datenbanken', 
     subtitle: 'SQL & MongoDB',
-    isActive: false, 
-    isCompleted: false 
-  },
-  { 
-    number: 8, 
-    title: 'Abschlussprojekt', 
-    subtitle: 'Fullstack App',
     isActive: false, 
     isCompleted: false 
   }
@@ -132,26 +125,58 @@ const weekDays = [
 ];
 
 export default function Dashboard() {
-  const [selectedWeek, setSelectedWeek] = useState(1);
+  const currentWeek = 4; // Fallback zu Woche 4
+
+  // Generiere alle 35 Tage in der richtigen Reihenfolge
+  const allDays = Array.from({ length: 35 }, (_, index) => {
+    const weekIndex = Math.floor(index / 5);
+    const dayInWeek = (index % 5) + 1;
+    const week = bootcampWeeks[weekIndex];
+
+    return {
+      ...weekDays[index % 5],
+      id: index + 1,
+      weekNumber: week.number,
+      title: `Tag ${dayInWeek}: ${weekDays[index % 5].title}`,
+      status: weekIndex === 0 ? weekDays[index % 5].status : 'upcoming'
+    };
+  });
 
   const handleWeekSelect = (weekNumber: number) => {
-    setSelectedWeek(weekNumber);
+    const weekElement = document.querySelector(`[data-week="${weekNumber}"]`);
+    weekElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  // Memoize die Wochen-Liste mit der aktuellen Woche
+  const memoizedWeeks = useMemo(() => 
+    bootcampWeeks.map(week => ({
+      ...week,
+      isCurrent: week.number === currentWeek
+    })),
+    [currentWeek]
+  );
+
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col h-screen bg-gray-50">
       <Navbar />
       
-      <div className="flex flex-1">
-        {/* Sidebar */}
-        <div className="w-72 flex-shrink-0 border-r border-gray-200 overflow-y-auto">
-          <WeekSidebar weeks={bootcampWeeks} onWeekSelect={handleWeekSelect} />
+      <div className="flex flex-1 overflow-hidden">
+        {/* Fixierte Sidebar */}
+        <div className="w-72 flex-shrink-0 border-r border-gray-200">
+          <WeekSidebar 
+            weeks={memoizedWeeks}
+            onWeekSelect={handleWeekSelect} 
+          />
         </div>
 
-        {/* Main Content */}
-        <main className="flex-1 p-6 overflow-y-auto">
-          <div className="max-w-5xl mx-auto">
-            <RoadMap days={weekDays} weekNumber={selectedWeek} />
+        {/* Scrollbare Main Content */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="max-w-5xl mx-auto p-6">
+            <RoadMap 
+              days={allDays}
+              weekNumber={currentWeek}
+              showTitle={true}
+            />
           </div>
         </main>
       </div>
