@@ -46,7 +46,7 @@ export default function ChatBot() {
       {/* Minimized State - Always visible */}
       <button
         onClick={() => setIsMinimized(false)}
-        className="fixed bottom-20 right-4 w-12 h-12 bg-[#4B2E83] text-white rounded-full shadow-lg flex items-center justify-center hover:bg-[#3b2566] transition-colors z-50"
+        className="fixed bottom-5 right-4 w-12 h-12 bg-[#4B2E83] text-white rounded-full shadow-lg flex items-center justify-center hover:bg-[#3b2566] transition-colors z-50"
         title="Frag deinen Lehrer"
       >
         <FaQuestionCircle className="w-6 h-6" />
@@ -54,7 +54,7 @@ export default function ChatBot() {
 
       {/* Expanded State - Only visible when not minimized */}
       {!isMinimized && (
-        <div className="fixed bottom-20 right-4 w-96 bg-white rounded-t-lg shadow-xl z-50">
+        <div className="fixed bottom-5 right-4 w-96 bg-white rounded-t-lg shadow-xl z-50">
           {/* Header */}
           <div
             className="p-4 bg-[#4B2E83] text-white rounded-t-lg cursor-pointer flex justify-between items-center"
