@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 interface DayNode {
   id: number;
   weekNumber: number;
+  dayNumber: number;
   title: string;
   description: string;
   tasks: string[];
@@ -84,10 +85,12 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
 
   return (
     <div className="flex-1 p-6 bg-white rounded-lg shadow-lg">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Dein Wochenplan</h2>
-        <p className="text-gray-600">Klicke auf einen Tag für mehr Details</p>
-      </div>
+      {showTitle && (
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">Dein Wochenplan</h2>
+          <p className="text-gray-600">Klicke auf einen Tag für mehr Details</p>
+        </div>
+      )}
 
       {/* Progress Section */}
       <div className="mb-6">
@@ -142,7 +145,6 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
         <div className="relative space-y-16">
           {Object.entries(weekGroups).map(([weekIndex, weekDays]) => (
             <div 
-              // style={{ marginTop: '-100px' , paddingTop: '100px'}}
               key={weekIndex}
               data-week={weekDays[0].weekNumber}
               className="relative min-h-[20vh] flex items-center"
@@ -165,7 +167,7 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                             : 'border-gray-200 bg-white'
                         }`}
                       >
-                        <div className="text-lg font-semibold mb-2">Tag {day.id}</div>
+                        <div className="text-lg font-semibold mb-2">Tag {day.dayNumber}</div>
                         <h3 className="font-medium mb-1">{day.title}</h3>
                         {selectedNode === day.id && (
                           <div className="mt-4 space-y-2">
