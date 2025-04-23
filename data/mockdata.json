@@ -1,0 +1,204 @@
+{
+  "bootcampName": "Web Development & AI Bootcamp",
+  "progress": 160,
+  "currentDay": 8,
+  "taskCount": 320,
+  "bootcampContent": [
+    {
+      "title": "Week 1: Software Architecture",
+      "subtitle": "Build your first applications",
+      "nodes": [
+        {
+          "day": 1,
+          "content": "Developer Tools & Ruby Fundamentals",
+          "description": "Master essential developer tools including command line, text editor and Git. Learn the basics of programming with variables, loops, functions, and data structures."
+        },
+        {
+          "day": 2,
+          "content": "Object-Oriented Programming",
+          "description": "Learn how to write robust, easy-to-maintain code using object-oriented principles."
+        },
+        {
+          "day": 3,
+          "content": "MVC Pattern I",
+          "description": "Begin to understand the Model-View-Controller design pattern and start building applications with this architecture."
+        },
+        {
+          "day": 4,
+          "content": "MVC Pattern II & APIs",
+          "description": "Continue with MVC pattern implementation and learn to extract data through web-scraping or APIs."
+        },
+        {
+          "day": 5,
+          "content": "Project: Recipe Management App",
+          "description": "Apply your knowledge to build a complete recipe management application using the MVC architecture."
+        }
+      ]
+    },
+    {
+      "title": "Week 2: Database & SQL",
+      "subtitle": "Store and extract data",
+      "nodes": [
+        {
+          "day": 6,
+          "content": "Relational Database Fundamentals",
+          "description": "Study examples of relational databases and understand database design principles."
+        },
+        {
+          "day": 7,
+          "content": "SQL Queries & CRUD Operations",
+          "description": "Learn SQL for Create, Read, Update, and Delete operations to manage databases effectively."
+        },
+        {
+          "day": 8,
+          "content": "Advanced SQL & JOINs",
+          "description": "Master advanced JOIN queries to connect data across multiple tables."
+        },
+        {
+          "day": 9,
+          "content": "ORM & Active Record",
+          "description": "Understand how to use an ORM (Object Relational Mapping) through Active Record to connect your database to your software."
+        },
+        {
+          "day": 10,
+          "content": "Project: Simple Blogging App",
+          "description": "Build a simple blogging application with a database backend. Write scripts to extract data from a music database."
+        }
+      ]
+    },
+    {
+      "title": "Week 3: Front-end Development",
+      "subtitle": "Master web technologies",
+      "nodes": [
+        {
+          "day": 11,
+          "content": "HTML & CSS Basics",
+          "description": "Code with HTML and CSS to build the structure and styling of web pages."
+        },
+        {
+          "day": 12,
+          "content": "Bootstrap 5",
+          "description": "Learn to use Bootstrap 5 framework for responsive layouts and component libraries."
+        },
+        {
+          "day": 13,
+          "content": "CSS Layouts",
+          "description": "Master CSS page layouts with flexbox and grid to create responsive designs."
+        },
+        {
+          "day": 14,
+          "content": "JavaScript Fundamentals",
+          "description": "Learn modern JavaScript to add dynamic behaviors to your websites."
+        },
+        {
+          "day": 15,
+          "content": "Advanced JavaScript & Frameworks",
+          "description": "Practice with key JavaScript frameworks and build dynamic components like chats or todo apps."
+        }
+      ]
+    },
+    {
+      "title": "Week 4: Web App Development",
+      "subtitle": "Put everything together",
+      "nodes": [
+        {
+          "day": 16,
+          "content": "Ruby on Rails Basics",
+          "description": "Learn to code using Ruby on Rails as the foundation for your web applications."
+        },
+        {
+          "day": 17,
+          "content": "Rails & JavaScript Integration",
+          "description": "Develop skills to combine Rails with JavaScript for dynamic front-end experiences."
+        },
+        {
+          "day": 18,
+          "content": "Testing & Code Coverage",
+          "description": "Set up tests to ensure your code is robust and maintainable."
+        },
+        {
+          "day": 19,
+          "content": "Deployment & Production",
+          "description": "Learn to deploy your applications to production on a real domain using Heroku."
+        },
+        {
+          "day": 20,
+          "content": "Project: Marketplace Clone",
+          "description": "Work in teams to develop and deploy a marketplace application (similar to Airbnb or Yelp)."
+        }
+      ]
+    },
+    {
+      "title": "Week 5: AI Integration",
+      "subtitle": "Build AI features in your apps",
+      "nodes": [
+        {
+          "day": 21,
+          "content": "OpenAI API Integration",
+          "description": "Integrate OpenAI API with Rails to add AI features to web applications."
+        },
+        {
+          "day": 22,
+          "content": "Chatbots & Text Generation",
+          "description": "Develop AI chatbots and text generation features in your applications."
+        },
+        {
+          "day": 23,
+          "content": "Image Generation & RAG",
+          "description": "Implement retrieval-augmented generation (RAG) for enhanced AI accuracy and learn to generate images with AI."
+        },
+        {
+          "day": 24,
+          "content": "Copilot & Developer Productivity",
+          "description": "Utilize Copilot for more efficient coding practices and optimize background job processing for AI tasks."
+        },
+        {
+          "day": 25,
+          "content": "Websockets & Real-time Features",
+          "description": "Use websockets to build real-time chat features and other interactive components."
+        }
+      ]
+    },
+    {
+      "title": "Weeks 6: Final Project",
+      "subtitle": "Build your own web & AI app from scratch",
+      "nodes": [
+        {
+          "day": 26,
+          "content": "Project Ideation & Planning",
+          "description": "Form teams of 3-4 people. Brainstorm, pitch, and plan your original AI-powered web project."
+        },
+        {
+          "day": 27,
+          "content": "UI/UX Design",
+          "description": "Design your app on Figma, creating wireframes and mockups for your project."
+        },
+        {
+          "day": 28,
+          "content": "Backend Development",
+          "description": "Implement the backend infrastructure using Rails and setup your database schema."
+        },
+        {
+          "day": 29,
+          "content": "Frontend Development",
+          "description": "Build the user interface with HTML, CSS, and JavaScript following your designs."
+        },
+        {
+          "day": 30,
+          "content": "AI Feature Implementation",
+          "description": "Integrate AI capabilities into your application using the techniques learned throughout the bootcamp."
+        },
+        {
+          "day": 31,
+          "content": "Testing & Refinement",
+          "description": "Test your application, fix bugs, and refine features based on feedback."
+        },
+        {
+          "day": 32,
+          "content": "Deployment & Presentation",
+          "description": "Deploy your completed project and prepare to present it to an audience on Demo Day."
+        }
+      ]
+    }
+  ]
+}
