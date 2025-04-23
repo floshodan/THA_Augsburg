@@ -13,13 +13,13 @@ interface WeekSidebarProps {
 
 export default function WeekSidebar({ weeks, onWeekSelect }: WeekSidebarProps) {
   return (
-    <div className="w-72 bg-white h-full shadow-lg">
-      <div className="p-4 border-b border-gray-200">
+    <div className="h-full bg-white">
+      <div className="sticky top-0 bg-white z-10 p-4 border-b border-gray-200">
         <h2 className="text-xl font-bold text-gray-900">Dein Lernfortschritt</h2>
         <p className="text-sm text-gray-500 mt-1">Web Development Bootcamp</p>
       </div>
-      <nav className="mt-4 p-2">
-        <ul className="space-y-2">
+      <nav className="p-4">
+        <ul className="space-y-3">
           {weeks.map((week) => (
             <li key={week.number}>
               <button

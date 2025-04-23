@@ -139,23 +139,24 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
       
-      <div className="flex h-[calc(100vh-64px-56px)]">
+      <div className="flex flex-1">
         {/* Sidebar */}
-        <WeekSidebar weeks={bootcampWeeks} onWeekSelect={handleWeekSelect} />
+        <div className="w-72 flex-shrink-0 border-r border-gray-200 overflow-y-auto">
+          <WeekSidebar weeks={bootcampWeeks} onWeekSelect={handleWeekSelect} />
+        </div>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 overflow-auto">
-          <RoadMap days={weekDays} weekNumber={selectedWeek} />
+        <main className="flex-1 p-6 overflow-y-auto">
+          <div className="max-w-5xl mx-auto">
+            <RoadMap days={weekDays} weekNumber={selectedWeek} />
+          </div>
         </main>
       </div>
 
-      {/* ChatBot */}
       <ChatBot />
-
-      {/* Footer */}
       <Footer />
     </div>
   );
