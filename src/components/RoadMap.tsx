@@ -19,6 +19,22 @@ interface RoadMapProps {
 
 export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMapProps) {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
+
+  // Calculate progress
+  const totalTasks = days.reduce((acc, day) => acc + day.tasks.length, 0);
+  const completedTasks = days.reduce((acc, day) => {
+    if (day.status === 'completed') {
+      return acc + day.tasks.length;
+    }
+    return acc;
+  }, 0);
+  const progressPercentage = (completedTasks / totalTasks) * 100;
+
+  // Placeholder feedback data
+  const feedbackData = {
+    performance: 'Gut',
+    comment: 'Du machst sehr gute Fortschritte! Besonders deine HTML/CSS Kenntnisse sind bereits sehr solide.'
+  };
   const containerRef = useRef<HTMLDivElement>(null);
   const [path, setPath] = useState<string>('');
 
@@ -68,12 +84,43 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
 
   return (
     <div className="flex-1 p-6 bg-white rounded-lg shadow-lg">
-      {showTitle && (
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Dein Wochenplan</h2>
-          <p className="text-gray-600">Klicke auf einen Tag für mehr Details</p>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-900">Dein Wochenplan</h2>
+        <p className="text-gray-600">Klicke auf einen Tag für mehr Details</p>
+      </div>
+
+      {/* Progress Section */}
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-sm font-medium text-gray-700">Fortschritt</span>
+          <span className="text-sm font-medium text-gray-700">
+            {completedTasks} von {totalTasks} Aufgaben erledigt
+          </span>
         </div>
-      )}
+        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div 
+            className="h-full bg-[#4B2E83] transition-all duration-500 ease-out"
+            style={{ width: `${progressPercentage}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Simple Feedback Box */}
+      <div className="mb-6 bg-white rounded-lg p-4 border border-gray-200">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-medium text-gray-900">Your Feedback</h3>
+          <span className={`px-2 py-1 rounded-full text-sm ${
+            feedbackData.performance === 'Gut' 
+              ? 'bg-green-100 text-green-800'
+              : feedbackData.performance === 'Mittel'
+              ? 'bg-yellow-100 text-yellow-800'
+              : 'bg-red-100 text-red-800'
+          }`}>
+            {feedbackData.performance}
+          </span>
+        </div>
+        <p className="mt-2 text-gray-900 text-sm">{feedbackData.comment}</p>
+      </div>
 
       <div ref={containerRef} className="relative">
         {/* Verbindungslinien */}

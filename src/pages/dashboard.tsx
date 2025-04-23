@@ -5,7 +5,6 @@ import Navbar from '../components/Navbar';
 import WeekSidebar from '../components/WeekSidebar';
 import RoadMap from '../components/RoadMap';
 import ChatBot from '../components/ChatBot';
-import Footer from '../components/Footer';
 
 // Bootcamp Wochen
 const bootcampWeeks = [
@@ -160,8 +159,8 @@ export default function Dashboard() {
     <div className="flex flex-col h-screen bg-gray-50">
       <Navbar />
       
-      <div className="flex flex-1 overflow-hidden">
-        {/* Fixierte Sidebar */}
+      <div className="flex h-[calc(100vh-64px)]">
+        {/* Sidebar */}
         <div className="w-72 flex-shrink-0 border-r border-gray-200">
           <WeekSidebar 
             weeks={memoizedWeeks}
@@ -181,8 +180,10 @@ export default function Dashboard() {
         </main>
       </div>
 
-      <ChatBot />
-      <Footer />
+      {/* ChatBot */}
+      <div className="fixed bottom-12 right-8 z-50">
+        <ChatBot />
+      </div>
     </div>
   );
 } 
