@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
-import OnboardingForm from '../components/OnboardingForm';
+import ExperienceForm from '../components/ExperienceForm';
 import Navbar from '../components/Navbar';
 
 const geistSans = Geist({
@@ -18,7 +18,7 @@ export default function Home() {
     <div>
       <Navbar />
       <main>
-        <OnboardingForm />
+        <ExperienceForm />
       </main>
     </div>
   );
