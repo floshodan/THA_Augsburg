@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FaQuestionCircle } from 'react-icons/fa';
 
 interface Message {
@@ -26,6 +26,14 @@ export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const formatResponse = (data: any) => {
     let responseText = '';
@@ -130,7 +138,10 @@ export default function ChatBot() {
           </div>
 
           {/* Chat Container */}
-          <div className="p-4 h-[400px] overflow-y-auto">
+          <div 
+            ref={chatContainerRef}
+            className="p-4 h-[400px] overflow-y-auto"
+          >
             {messages.map(message => (
               <div
                 key={message.id}
@@ -152,6 +163,13 @@ export default function ChatBot() {
                 </div>
               </div>
             ))}
+            {isLoading && (
+              <div className="flex items-center space-x-2 text-gray-500">
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              </div>
+            )}
           </div>
 
           {/* Input */}
