@@ -56,7 +56,6 @@ THA Augsburg addresses these challenges through:
 - **Workflow Automation**: n8n
 - **AI Integration**: OpenAI
 - **Development Tools**: ESLint, TypeScript, PostCSS
-- **Real-time Communication**: WebSocket
 - **Analytics**: Custom-built tracking system
 
 ## 📦 Installation
@@ -77,7 +76,6 @@ THA Augsburg addresses these challenges through:
    ```
    OPENAI_API_KEY=your_api_key
    N8N_WEBHOOK_URL=your_n8n_webhook_url
-   ANALYTICS_API_KEY=your_analytics_key
    ```
 
 4. Start the development server:
