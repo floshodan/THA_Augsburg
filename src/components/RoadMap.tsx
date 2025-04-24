@@ -41,6 +41,7 @@ const getProgressColorClass = (percentage: number, status: string): string => {
 
 const getBorderColorClass = (percentage: number, status: string): string => {
   if (status === 'upcoming') return 'border-gray-300';
+  if (status === 'current') return 'border-[#4B2E83]';
   if (percentage === 100) return 'border-green-500';
   if (percentage >= 75) return 'border-green-400';
   if (percentage >= 50) return 'border-yellow-400';
