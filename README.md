@@ -1,40 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# THA Augsburg
 
-## Getting Started
+A modern web application that combines Next.js frontend with n8n workflow automation and OpenAI's LLM capabilities for intelligent task handling.
 
-First, run the development server:
+## 🎯 Problem Statement
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Learning to code presents several significant challenges:
+- Students often get stuck on errors they don't understand
+- Lack of real-time performance feedback
+- Teachers overwhelmed with repetitive help requests
+- Delayed feedback that arrives too late to be effective
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💡 Solution
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+THA Augsburg addresses these challenges through:
+- **AI-Powered Error Analysis**: Real-time error detection and explanation using OpenAI's LLM
+- **Automated Feedback System**: Instant feedback on code submissions through n8n workflows
+- **Performance Analytics**: Detailed insights into student progress and common pain points
+- **Smart Assistance**: Context-aware help suggestions based on student's current task
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 🚀 Features
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+- **Modern Frontend**: Built with Next.js 15, React 19, and TypeScript
+- **Intelligent Backend**: Powered by n8n workflow automation
+- **AI Integration**: OpenAI LLM for intelligent task processing
+- **RAG Implementation**: Retrieval-Augmented Generation for enhanced AI responses
+- **State Management**: Efficient state handling with Zustand
+- **Styling**: Beautiful UI with Tailwind CSS
+- **Real-time Feedback**: Instant code analysis and suggestions
+- **Performance Tracking**: Comprehensive analytics dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🏗️ Architecture
 
-## Learn More
+### Frontend
+- **Framework**: Next.js 15.3.1
+- **Language**: TypeScript
+- **State Management**: Zustand 5.0.3
+- **Styling**: Tailwind CSS 4
+- **UI Components**: React 19
+- **Real-time Updates**: WebSocket integration for instant feedback
 
-To learn more about Next.js, take a look at the following resources:
+### Backend
+- **Workflow Automation**: n8n
+- **AI Processing**: OpenAI LLM
+- **RAG System**: Custom implementation for enhanced AI responses
+- **Analytics Engine**: Custom-built performance tracking system
+- **Error Analysis**: Advanced code parsing and error detection
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Frontend Framework**: Next.js 15.3.1
+- **UI Library**: React 19
+- **Language**: TypeScript
+- **State Management**: Zustand 5.0.3
+- **Styling**: Tailwind CSS 4
+- **Workflow Automation**: n8n
+- **AI Integration**: OpenAI
+- **Development Tools**: ESLint, TypeScript, PostCSS
+- **Real-time Communication**: WebSocket
+- **Analytics**: Custom-built tracking system
 
-## Deploy on Vercel
+## 📦 Installation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/floshodan/THA_Augsburg
+   cd THA_Augsburg
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables:
+   Create a `.env.local` file with:
+   ```
+   OPENAI_API_KEY=your_api_key
+   N8N_WEBHOOK_URL=your_n8n_webhook_url
+   ANALYTICS_API_KEY=your_analytics_key
+   ```
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## 🔧 Development
+
+- Run development server: `npm run dev`
+- Build for production: `npm run build`
+- Start production server: `npm run start`
+- Lint code: `npm run lint`
+- Run tests: `npm run test`
+- Generate analytics report: `npm run analytics`
+
+## 📚 Documentation
+
+Detailed documentation is available in the `docs/` directory. It includes:
+- Project overview
+- Technical architecture
+- Setup instructions
+- Development guide
+- API documentation
+- Deployment guide
+- Analytics implementation
+- Error handling procedures
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
