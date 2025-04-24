@@ -377,7 +377,7 @@ export default function ExperienceForm() {
           value={formData.additionalExperience}
           onChange={(e) => setFormData(prev => ({ ...prev, additionalExperience: e.target.value }))}
           placeholder="Tell us about any other relevant experience or skills..."
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4B2E83] focus:border-transparent h-32"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4B2E83] focus:border-transparent h-32 text-black placeholder-gray-600"
         />
       </div>
 
