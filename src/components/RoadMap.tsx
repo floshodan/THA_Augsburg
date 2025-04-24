@@ -2,23 +2,8 @@
 
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import DailyFeedback from './DailyFeedback';
-
-interface Progress {
-  completedTasks: number;
-  totalTasks: number;
-  percentage: number;
-}
-
-interface DayNode {
-  id: number;
-  weekNumber: number;
-  dayNumber: number;
-  title: string;
-  description: string;
-  tasks: string[];
-  status: 'completed' | 'current' | 'upcoming';
-  progress: Progress;
-}
+import GlobalFeedback from './GlobalFeedback';
+import { DayNode } from '../types/course';
 
 interface RoadMapProps {
   days: DayNode[];
@@ -26,6 +11,7 @@ interface RoadMapProps {
   showTitle?: boolean;
 }
 
+// Utility functions
 const getColorClass = (percentage: number): string => {
   if (percentage === 100) return 'green-500';
   if (percentage >= 75) return 'green-400';
@@ -44,6 +30,7 @@ const getProgressColor = (percentage: number): string => {
   return `bg-${getColorClass(percentage)}`;
 };
 
+// Custom hooks
 const useScrollPosition = (selectedNode: number | null, containerRef: React.RefObject<HTMLDivElement | null>) => {
   const calculateAndScrollToOptimalPosition = useCallback(() => {
     if (selectedNode && containerRef.current) {
@@ -93,6 +80,7 @@ const useNodePosition = (selectedNode: number | null, containerRef: React.RefObj
   return position;
 };
 
+// Main component
 export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMapProps) {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -175,6 +163,8 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
           <p className="text-gray-600">Klicke auf einen Tag für mehr Details</p>
         </div>
       )}
+
+      <GlobalFeedback days={days} />
 
       <div ref={containerRef} className="relative">
         <svg 
