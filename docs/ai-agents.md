@@ -4,7 +4,7 @@ The AI agents system in THA Augsburg is designed to provide intelligent, context
 
 ## Implementation Overview
 
-![AI Agent Workflow](../images/n8n-workflow.png)
+![AI Agent Workflow](../images/agents.png)
 
 The diagram above shows our AI agent implementation in n8n:
 - **Webhook Integration**: Entry point for frontend requests
@@ -112,17 +112,3 @@ The Context Agent maintains the learning session context and ensures consistent 
 - Request queuing
 - Priority-based processing
 - Resource allocation optimization
-
-## Monitoring and Maintenance
-
-### Health Checks
-- Agent availability monitoring
-- Response time tracking
-- Error rate monitoring
-- Resource usage tracking
-
-### Updates and Improvements
-- Continuous learning from interactions
-- Model fine-tuning
-- Knowledge base updates
-- Performance optimization 
