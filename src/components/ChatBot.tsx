@@ -3,6 +3,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { FaQuestionCircle } from 'react-icons/fa';
 
+interface ExperienceData {
+  knowledge: string[];
+  wantKnow: string[];
+  description: string;
+}
+
 interface Message {
   id: number;
   text: string;
@@ -21,7 +27,11 @@ interface Message {
   };
 }
 
-export default function ChatBot() {
+interface ChatBotProps {
+  experienceData: ExperienceData;
+}
+
+export default function ChatBot({ experienceData }: ChatBotProps) {
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
@@ -62,51 +72,64 @@ export default function ChatBot() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputText.trim() || isLoading) return;
+    if (!inputText.trim()) return;
 
-    const newMessage: Message = {
-      id: Date.now(),
-      text: inputText,
-      isBot: false,
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, newMessage]);
-    setInputText('');
     setIsLoading(true);
-
     try {
-      const response = await fetch('http://agent.floshodan.io:5678/webhook/grade-code', {
+      const response = await fetch('http://agent.floshodan.io:5678/webhook/7853e7c5-40bb-4703-8bb2-5caeb8e404b6', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          key: "value",
-          code: inputText
+          knowledge: experienceData.knowledge.join(', '),
+          wantKnow: experienceData.wantKnow.join(', '),
+          description: experienceData.description,
+          message: inputText,
+          sessionId: 1
         }),
       });
 
-      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const text = await response.text();
+      console.log('Raw response:', text);
+
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error('JSON parse error:', e);
+        throw new Error('Invalid JSON response from server');
+      }
+
+      if (!data || !data.output) {
+        throw new Error('Invalid response format');
+      }
+
+      // Remove the <think> section from the output
+      const cleanOutput = data.output.replace(/<think>[\s\S]*?<\/think>\n\n/, '');
       
       const botResponse: Message = {
         id: Date.now() + 1,
-        text: formatResponse(data.output),
-        isBot: true,
-        timestamp: new Date(),
-        data: data.output
-      };
-      
-      setMessages(prev => [...prev, botResponse]);
-    } catch (error) {
-      console.error('Error sending message:', error);
-      const errorResponse: Message = {
-        id: Date.now() + 1,
-        text: 'Entschuldigung, es gab einen Fehler bei der Verarbeitung deiner Nachricht.',
+        text: cleanOutput,
         isBot: true,
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, errorResponse]);
+
+      setMessages(prev => [...prev, botResponse]);
+      setInputText('');
+    } catch (error) {
+      console.error('Error:', error);
+      const errorMessage: Message = {
+        id: Date.now() + 1,
+        text: `Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`,
+        isBot: true,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }

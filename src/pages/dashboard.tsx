@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import WeekSidebar from '../components/WeekSidebar';
 import RoadMap from '../components/RoadMap';
@@ -25,8 +25,26 @@ interface DayTemplate {
   progress: Progress;
 }
 
+interface ExperienceData {
+  knowledge: string[];
+  wantKnow: string[];
+  description: string;
+}
+
 export default function Dashboard() {
   const { currentWeek, bootcampWeeks, weekDays, bootcampTitle } = courseData;
+  const [experienceData, setExperienceData] = useState<ExperienceData>({
+    knowledge: [],
+    wantKnow: [],
+    description: 'No description provided'
+  });
+
+  useEffect(() => {
+    const savedData = localStorage.getItem('experienceData');
+    if (savedData) {
+      setExperienceData(JSON.parse(savedData));
+    }
+  }, []);
 
   // Generiere alle 35 Tage in der richtigen Reihenfolge
   const allDays = Array.from({ length: 35 }, (_, index) => {
@@ -115,7 +133,7 @@ export default function Dashboard() {
 
       {/* ChatBot */}
       <div className="fixed bottom-12 right-8 z-50">
-        <ChatBot />
+        <ChatBot experienceData={experienceData} />
       </div>
     </div>
   );

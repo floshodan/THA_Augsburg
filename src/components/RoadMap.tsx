@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import DailyFeedback from './DailyFeedback';
+import ChatBox from './ChatBox';
 
 interface Progress {
   completedTasks: number;
@@ -31,6 +32,7 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
   const containerRef = useRef<HTMLDivElement>(null);
   const [path, setPath] = useState<string>('');
   const [selectedNodePosition, setSelectedNodePosition] = useState<{ top: number; left: number; width: number } | null>(null);
+  const [message, setMessage] = useState<string>('');
 
   // Berechne den SVG-Pfad basierend auf den Node-Positionen
   useEffect(() => {
@@ -199,9 +201,15 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
             <DailyFeedback
               day={days.find(day => day.id === selectedNode)!}
               onClose={() => setSelectedNode(null)}
+              message={message}
             />
           </div>
         )}
+      </div>
+
+      {/* ChatBox */}
+      <div className="mt-8">
+        <ChatBox onMessageSubmit={setMessage} />
       </div>
     </div>
   );

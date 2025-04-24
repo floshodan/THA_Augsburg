@@ -13,9 +13,10 @@ interface DailyFeedbackProps {
     };
   };
   onClose: () => void;
+  message: string;
 }
 
-export default function DailyFeedback({ day, onClose }: DailyFeedbackProps) {
+export default function DailyFeedback({ day, onClose, message }: DailyFeedbackProps) {
   const [feedback, setFeedback] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,8 +31,11 @@ export default function DailyFeedback({ day, onClose }: DailyFeedbackProps) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            key: "value",
-            code: "your code here"
+            knowledge: "UI/UX, Flutter, HTML, JS",
+            wantKnow: "UI/UX, Flutter, HTML, JS",
+            description: "mein name ist mike und ich liebe torte",
+            message: message,
+            sessionID: 1
           }),
         });
 
@@ -50,7 +54,7 @@ export default function DailyFeedback({ day, onClose }: DailyFeedbackProps) {
     };
 
     fetchFeedback();
-  }, []);
+  }, [message]);
 
   const handleAcknowledge = (type: 'not-understood' | 'no-time') => {
     setAcknowledged(type);
