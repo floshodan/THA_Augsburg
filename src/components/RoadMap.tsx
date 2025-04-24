@@ -177,8 +177,8 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
     <div className="flex-1 p-6 bg-white rounded-lg shadow-lg">
       {showTitle && (
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Dein Wochenplan</h2>
-          <p className="text-gray-600">Klicke auf einen Tag für mehr Details</p>
+          <h2 className="text-2xl font-bold text-gray-900">Your Weekly Plan</h2>
+          <p className="text-gray-600">Click on a day for more details</p>
         </div>
       )}
 
@@ -225,7 +225,7 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                         <div className={`text-lg font-semibold mb-2 ${
                           day.status === 'current' ? 'text-[#4B2E83]' : 
                           day.status === 'upcoming' ? 'text-gray-400' : 'text-gray-900'
-                        }`}>Tag {day.dayNumber}</div>
+                        }`}>Day {day.dayNumber}</div>
                         <h3 className={`font-medium mb-1 ${
                           day.status === 'upcoming' ? 'text-gray-400' : 'text-gray-900'
                         }`}>{day.title}</h3>
@@ -240,7 +240,7 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                           <div className={`text-xs mt-1 ${
                             day.status === 'upcoming' ? 'text-gray-400' : 'text-gray-500'
                           }`}>
-                            {day.progress.completedTasks} von {day.progress.totalTasks} Aufgaben
+                            {day.progress.completedTasks} of {day.progress.totalTasks} tasks
                           </div>
                         </div>
                       </div>
@@ -252,20 +252,18 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
           ))}
         </div>
 
-        {selectedNode && selectedNodePosition && (
-          <div 
+        {selectedNode && (
+          <div
             ref={overlayRef}
-            className="absolute z-10 mb-16"
+            className="absolute left-0 w-full bg-white rounded-lg shadow-lg transition-all duration-300"
             style={{
-              top: `${selectedNodePosition.top}px`,
-              left: `${selectedNodePosition.left}px`,
-              width: `${selectedNodePosition.width}px`
+              top: selectedNodePosition?.top,
+              transform: 'translateY(1rem)'
             }}
           >
             <DailyFeedback
-              day={days.find(day => day.id === selectedNode)!}
+              day={days.find(d => d.id === selectedNode)!}
               onClose={() => setSelectedNode(null)}
-              onFeedbackLoaded={calculateAndScrollToOptimalPosition}
             />
           </div>
         )}

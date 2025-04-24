@@ -97,7 +97,7 @@ export default function ChatBot() {
       
       const botResponse: Message = {
         id: Date.now() + 1,
-        text: responseData.response || responseData.output || 'Keine Antwort erhalten',
+        text: responseData.response || responseData.output || 'No response received',
         isBot: true,
         timestamp: new Date(),
         data: responseData
@@ -108,7 +108,7 @@ export default function ChatBot() {
       console.error('Error sending message:', error);
       const errorResponse: Message = {
         id: Date.now() + 1,
-        text: 'Entschuldigung, es gab einen Fehler bei der Verarbeitung deiner Nachricht.',
+        text: 'Sorry, there was an error processing your message.',
         isBot: true,
         timestamp: new Date()
       };
@@ -124,7 +124,7 @@ export default function ChatBot() {
       <button
         onClick={() => setIsMinimized(false)}
         className="fixed bottom-5 right-4 w-12 h-12 bg-[#4B2E83] text-white rounded-full shadow-lg flex items-center justify-center hover:bg-[#3b2566] transition-colors z-50"
-        title="Frag deinen Lehrer"
+        title="Ask your teacher"
       >
         <FaQuestionCircle className="w-6 h-6" />
       </button>
@@ -137,7 +137,7 @@ export default function ChatBot() {
             className="p-4 bg-[#4B2E83] text-white rounded-t-lg cursor-pointer flex justify-between items-center"
             onClick={() => setIsMinimized(true)}
           >
-            <h3 className="font-medium">Frag deinen Lehrer</h3>
+            <h3 className="font-medium">Ask your teacher</h3>
             <button className="text-white hover:text-gray-200">
               ▼
             </button>
@@ -185,7 +185,7 @@ export default function ChatBot() {
                 type="text"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder="Stelle eine Frage..."
+                placeholder="Ask a question..."
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B2E83] text-gray-900"
                 disabled={isLoading}
               />
@@ -194,7 +194,7 @@ export default function ChatBot() {
                 className="px-4 py-2 bg-[#4B2E83] text-white rounded-md hover:bg-[#3b2566] disabled:opacity-50"
                 disabled={isLoading}
               >
-                {isLoading ? '...' : 'Senden'}
+                {isLoading ? '...' : 'Send'}
               </button>
             </div>
           </form>

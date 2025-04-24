@@ -116,7 +116,7 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
       <div className="flex justify-between items-start mb-4">
         <div>
           <h2 className="text-xl font-bold text-gray-900">{day.title}</h2>
-          <p className="text-gray-600 mt-1">Tag {day.id}</p>
+          <p className="text-gray-600 mt-1">Day {day.id}</p>
         </div>
         <button
           onClick={onClose}
@@ -131,12 +131,12 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
       <div className="space-y-6">
         <div className="grid grid-cols-2 gap-8">
           <div>
-            <h3 className="text-base font-semibold text-gray-900 mb-2">Beschreibung</h3>
+            <h3 className="text-base font-semibold text-gray-900 mb-2">Description</h3>
             <p className="text-gray-600 text-sm">{day.description}</p>
           </div>
 
           <div>
-            <h3 className="text-base font-semibold text-gray-900 mb-2">Aufgaben</h3>
+            <h3 className="text-base font-semibold text-gray-900 mb-2">Tasks</h3>
             <ul className="space-y-2">
               {day.tasks.map((task, index) => (
                 <li key={index} className="flex items-center">
@@ -153,7 +153,7 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
         </div>
 
         <div>
-          <h3 className="text-base font-semibold text-gray-900 mb-2">Tägliches Feedback</h3>
+          <h3 className="text-base font-semibold text-gray-900 mb-2">Daily Feedback</h3>
           {isLoading ? (
             <div className="flex items-center justify-center h-32">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#4B2E83]"></div>
@@ -165,39 +165,39 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
               <div className="bg-gray-50 rounded-lg p-4">
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-semibold text-gray-800 mb-2">Fortschritts-Checkpoint</h4>
+                    <h4 className="font-semibold text-gray-800 mb-2">Progress Checkpoint</h4>
                     <p className="text-gray-600 text-sm">{feedback.output.progress_checkpoint.problems}</p>
-                    <p className="text-gray-500 text-xs mt-1">Kategorie: {feedback.output.progress_checkpoint.category}</p>
+                    <p className="text-gray-500 text-xs mt-1">Category: {feedback.output.progress_checkpoint.category}</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">Qualität</h4>
+                      <h4 className="font-semibold text-gray-800 mb-2">Quality</h4>
                       <p className="text-gray-600 text-sm">{feedback.output.quality.description}</p>
                       <p className="text-gray-500 text-xs mt-1">Score: {feedback.output.quality.score}/10</p>
                     </div>
 
                     <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">Lesbarkeit</h4>
+                      <h4 className="font-semibold text-gray-800 mb-2">Readability</h4>
                       <p className="text-gray-600 text-sm">{feedback.output.readability.description}</p>
                       <p className="text-gray-500 text-xs mt-1">Score: {feedback.output.readability.score}/10</p>
                     </div>
 
                     <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">Struktur</h4>
+                      <h4 className="font-semibold text-gray-800 mb-2">Structure</h4>
                       <p className="text-gray-600 text-sm">{feedback.output.structure.description}</p>
                       <p className="text-gray-500 text-xs mt-1">Score: {feedback.output.structure.score}/10</p>
                     </div>
 
                     <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">Effizienz</h4>
+                      <h4 className="font-semibold text-gray-800 mb-2">Efficiency</h4>
                       <p className="text-gray-600 text-sm">{feedback.output.efficiency.description}</p>
                       <p className="text-gray-500 text-xs mt-1">Score: {feedback.output.efficiency.score}/10</p>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-gray-800 mb-2">Tipps</h4>
+                    <h4 className="font-semibold text-gray-800 mb-2">Tips</h4>
                     <p className="text-gray-600 text-sm">{feedback.output.tips}</p>
                   </div>
                 </div>

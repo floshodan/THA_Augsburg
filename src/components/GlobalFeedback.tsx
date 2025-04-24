@@ -19,7 +19,7 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
   const [error, setError] = useState<string | null>(null);
   const [showLongAnswer, setShowLongAnswer] = useState(false);
 
-  // Berechne den Gesamtfortschritt
+  // Calculate total progress
   const totalProgress = useMemo(() => {
     const totalTasks = days.reduce((sum, day) => sum + day.progress.totalTasks, 0);
     const completedTasks = days.reduce((sum, day) => sum + day.progress.completedTasks, 0);
@@ -30,7 +30,7 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
     };
   }, [days]);
 
-  // Hole Feedback von der API
+  // Fetch feedback from API
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
@@ -49,7 +49,7 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
         });
         setError(null);
       } catch (err) {
-        setError('Fehler beim Laden des Feedbacks');
+        setError('Error loading feedback');
         console.error('Error fetching feedback:', err);
       } finally {
         setIsLoading(false);
@@ -62,9 +62,9 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
   return (
     <div className="mb-6 p-6 bg-white rounded-lg shadow-lg">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-gray-900">Bootcamp Fortschritt</h2>
+        <h2 className="text-xl font-bold text-gray-900">Bootcamp Progress</h2>
         <span className="text-sm text-gray-500">
-          {totalProgress.completed} von {totalProgress.total} Aufgaben
+          {totalProgress.completed} of {totalProgress.total} tasks
         </span>
       </div>
 
@@ -91,10 +91,10 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
               onClick={() => setShowLongAnswer(!showLongAnswer)}
               className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200"
             >
-              {showLongAnswer ? 'Weniger anzeigen' : 'Mehr anzeigen'}
+              {showLongAnswer ? 'Show less' : 'Show more'}
             </button>
             <p className="text-xs text-gray-500">
-              Letztes Update: {new Date(feedback.timestamp).toLocaleDateString()}
+              Last update: {new Date(feedback.timestamp).toLocaleDateString()}
             </p>
           </div>
         ) : null}

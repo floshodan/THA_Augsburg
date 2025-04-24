@@ -16,7 +16,7 @@ export default function WeekSidebar({ weeks, onWeekSelect, bootcampTitle }: Week
   return (
     <div className="h-full bg-white">
       <div className="sticky top-0 bg-white z-10 p-4 border-b border-gray-200">
-        <h2 className="text-xl font-bold text-gray-900">Dein Lernfortschritt</h2>
+        <h2 className="text-xl font-bold text-gray-900">Your Learning Progress</h2>
         <p className="text-sm text-gray-500 mt-1">{bootcampTitle}</p>
       </div>
       <nav className="p-4 overflow-y-auto" style={{ height: 'calc(100vh - 64px - 89px)' }}>

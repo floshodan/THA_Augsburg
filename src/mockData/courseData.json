@@ -10,7 +10,7 @@
   "bootcampWeeks": [
     {
       "number": 1,
-      "title": "Web Grundlagen",
+      "title": "Web Fundamentals",
       "subtitle": "HTML, CSS & Git",
       "isCompleted": false
     },
@@ -46,7 +46,7 @@
     },
     {
       "number": 7,
-      "title": "Datenbanken",
+      "title": "Databases",
       "subtitle": "SQL & MongoDB",
       "isCompleted": false
     }
@@ -56,13 +56,13 @@
       "id": 1,
       "weekNumber": 1,
       "dayNumber": 1,
-      "title": "HTML Grundlagen",
-      "description": "Einführung in HTML5 und semantische Elemente",
+      "title": "HTML Fundamentals",
+      "description": "Introduction to HTML5 and semantic elements",
       "tasks": [
-        "HTML Dokumentstruktur",
-        "Semantische Tags",
-        "Formulare & Validierung",
-        "Übungsprojekt: Portfolio-Seite"
+        "HTML Document Structure",
+        "Semantic Tags",
+        "Forms & Validation",
+        "Practice Project: Portfolio Page"
       ],
       "status": "completed",
       "progress": {
@@ -75,9 +75,9 @@
       "id": 2,
       "dayNumber": 2,
       "title": "CSS Basics",
-      "description": "Styling und Layout-Grundlagen",
+      "description": "Styling and Layout Fundamentals",
       "tasks": [
-        "CSS Selektoren",
+        "CSS Selectors",
         "Box Model",
         "Flexbox Layout",
         "Responsive Design"
@@ -93,10 +93,10 @@
       "id": 3,
       "dayNumber": 3,
       "title": "CSS Advanced",
-      "description": "Fortgeschrittene Styling-Techniken",
+      "description": "Advanced Styling Techniques",
       "tasks": [
         "CSS Grid",
-        "Animationen",
+        "Animations",
         "CSS Variables",
         "CSS Frameworks"
       ],
@@ -111,9 +111,9 @@
       "id": 4,
       "dayNumber": 4,
       "title": "Git & GitHub",
-      "description": "Versionskontrolle und Zusammenarbeit",
+      "description": "Version Control and Collaboration",
       "tasks": [
-        "Git Grundlagen",
+        "Git Basics",
         "Branching & Merging",
         "GitHub Workflow",
         "Team Collaboration"
@@ -128,11 +128,11 @@
     {
       "id": 5,
       "dayNumber": 5,
-      "title": "Projekt Woche 1",
-      "description": "Wochenprojekt: Responsive Website",
+      "title": "Week 1 Project",
+      "description": "Week Project: Responsive Website",
       "tasks": [
         "Wireframing",
-        "HTML Struktur",
+        "HTML Structure",
         "CSS Styling",
         "Git Deployment"
       ],
@@ -146,13 +146,13 @@
     {
       "id": 6,
       "dayNumber": 1,
-      "title": "JavaScript Einführung",
-      "description": "Grundlagen der Programmierung mit JavaScript",
+      "title": "JavaScript Introduction",
+      "description": "Programming Basics with JavaScript",
       "tasks": [
-        "Variablen & Datentypen",
-        "Operatoren & Ausdrücke",
-        "Kontrollstrukturen",
-        "Funktionen"
+        "Variables & Data Types",
+        "Operators & Expressions",
+        "Control Structures",
+        "Functions"
       ],
       "status": "completed",
       "progress": {
@@ -164,13 +164,13 @@
     {
       "id": 7,
       "dayNumber": 2,
-      "title": "Arrays & Objekte",
-      "description": "Arbeiten mit komplexen Datentypen",
+      "title": "Arrays & Objects",
+      "description": "Working with Complex Data Types",
       "tasks": [
-        "Array Methoden",
-        "Objekt-Literale",
+        "Array Methods",
+        "Object Literals",
         "JSON",
-        "Übungsaufgaben"
+        "Practice Exercises"
       ],
       "status": "completed",
       "progress": {
@@ -183,12 +183,12 @@
       "id": 8,
       "dayNumber": 3,
       "title": "DOM Manipulation",
-      "description": "Interaktion mit dem Document Object Model",
+      "description": "Interaction with the Document Object Model",
       "tasks": [
-        "DOM Selektoren",
+        "DOM Selectors",
         "Event Handling",
         "DOM Manipulation",
-        "Mini-Projekt"
+        "Mini Project"
       ],
       "status": "completed",
       "progress": {
@@ -201,7 +201,7 @@
       "id": 9,
       "dayNumber": 4,
       "title": "JavaScript Patterns",
-      "description": "Wichtige Programmierkonzepte",
+      "description": "Important Programming Concepts",
       "tasks": [
         "Closures",
         "Hoisting",
@@ -218,10 +218,10 @@
     {
       "id": 10,
       "dayNumber": 5,
-      "title": "Projekt Woche 2",
-      "description": "Interaktive Webanwendung",
+      "title": "Week 2 Project",
+      "description": "Interactive Web Application",
       "tasks": [
-        "Projektplanung",
+        "Project Planning",
         "DOM Manipulation",
         "Event Handling",
         "Code Review"
@@ -237,7 +237,7 @@
       "id": 11,
       "dayNumber": 1,
       "title": "ES6+ Features",
-      "description": "Moderne JavaScript Features",
+      "description": "Modern JavaScript Features",
       "tasks": [
         "Arrow Functions",
         "Destructuring",
@@ -254,8 +254,8 @@
     {
       "id": 12,
       "dayNumber": 2,
-      "title": "Asynchrone Programmierung",
-      "description": "Promises und Async/Await",
+      "title": "Asynchronous Programming",
+      "description": "Promises and Async/Await",
       "tasks": [
         "Callbacks",
         "Promises",
@@ -273,7 +273,7 @@
       "id": 13,
       "dayNumber": 3,
       "title": "API Integration",
-      "description": "Arbeiten mit externen APIs",
+      "description": "Working with External APIs",
       "tasks": [
         "Fetch API",
         "REST APIs",
@@ -290,8 +290,8 @@
     {
       "id": 14,
       "dayNumber": 4,
-      "title": "Moderne JavaScript Tools",
-      "description": "Entwicklungswerkzeuge und Best Practices",
+      "title": "Modern JavaScript Tools",
+      "description": "Development Tools and Best Practices",
       "tasks": [
         "NPM & Package Management",
         "Bundling & Transpiling",
@@ -308,11 +308,11 @@
     {
       "id": 15,
       "dayNumber": 5,
-      "title": "Projekt Woche 3",
-      "description": "API-basierte Anwendung",
+      "title": "Week 3 Project",
+      "description": "API-based Application",
       "tasks": [
         "API Integration",
-        "Asynchrone Datenverarbeitung",
+        "Asynchronous Data Processing",
         "Error Handling",
         "Code Review"
       ],
@@ -326,10 +326,10 @@
     {
       "id": 16,
       "dayNumber": 1,
-      "title": "React Einführung",
-      "description": "Grundlagen von React",
+      "title": "React Introduction",
+      "description": "React Basics",
       "tasks": [
-        "React Konzepte",
+        "React Concepts",
         "JSX Syntax",
         "Components",
         "Props"
@@ -345,7 +345,7 @@
       "id": 17,
       "dayNumber": 2,
       "title": "React Components",
-      "description": "Komponenten erstellen und wiederverwenden",
+      "description": "Creating and Reusing Components",
       "tasks": [
         "Functional Components",
         "Class Components",
@@ -381,7 +381,7 @@
       "id": 19,
       "dayNumber": 4,
       "title": "React Lifecycle",
-      "description": "Komponenten-Lebenszyklus",
+      "description": "Component Lifecycle",
       "tasks": [
         "Lifecycle Methods",
         "useEffect",
@@ -398,7 +398,7 @@
     {
       "id": 20,
       "dayNumber": 5,
-      "title": "Projekt Woche 4",
+      "title": "Week 4 Project",
       "description": "React Single Page Application",
       "tasks": [
         "Component Architecture",
@@ -435,7 +435,7 @@
       "id": 22,
       "dayNumber": 2,
       "title": "React Hooks",
-      "description": "Moderne React Hooks",
+      "description": "Modern React Hooks",
       "tasks": [
         "useEffect",
         "useContext",
@@ -471,7 +471,7 @@
       "id": 24,
       "dayNumber": 4,
       "title": "Advanced State",
-      "description": "Fortgeschrittene State Management Techniken",
+      "description": "Advanced State Management Techniques",
       "tasks": [
         "State Patterns",
         "State Machines",
@@ -488,8 +488,8 @@
     {
       "id": 25,
       "dayNumber": 5,
-      "title": "Projekt Woche 5",
-      "description": "State Management Projekt",
+      "title": "Week 5 Project",
+      "description": "State Management Project",
       "tasks": [
         "State Architecture",
         "Global State",
@@ -506,8 +506,8 @@
     {
       "id": 26,
       "dayNumber": 1,
-      "title": "Node.js Einführung",
-      "description": "Grundlagen von Node.js",
+      "title": "Node.js Introduction",
+      "description": "Node.js Basics",
       "tasks": [
         "Node.js Setup",
         "NPM & Packages",
@@ -525,7 +525,7 @@
       "id": 27,
       "dayNumber": 2,
       "title": "Express.js",
-      "description": "Web Framework für Node.js",
+      "description": "Web Framework for Node.js",
       "tasks": [
         "Express Setup",
         "Routing",
@@ -561,7 +561,7 @@
       "id": 29,
       "dayNumber": 4,
       "title": "Authentication",
-      "description": "Benutzerauthentifizierung",
+      "description": "User Authentication",
       "tasks": [
         "JWT",
         "Session Management",
@@ -578,8 +578,8 @@
     {
       "id": 30,
       "dayNumber": 5,
-      "title": "Projekt Woche 6",
-      "description": "Backend API Projekt",
+      "title": "Week 6 Project",
+      "description": "Backend API Project",
       "tasks": [
         "API Design",
         "Authentication",
@@ -596,8 +596,8 @@
     {
       "id": 31,
       "dayNumber": 1,
-      "title": "SQL Grundlagen",
-      "description": "Einführung in SQL",
+      "title": "SQL Basics",
+      "description": "Introduction to SQL",
       "tasks": [
         "SQL Syntax",
         "CRUD Operations",
@@ -615,7 +615,7 @@
       "id": 32,
       "dayNumber": 2,
       "title": "MongoDB",
-      "description": "NoSQL Datenbanken",
+      "description": "NoSQL Databases",
       "tasks": [
         "MongoDB Setup",
         "CRUD Operations",
@@ -650,8 +650,8 @@
     {
       "id": 34,
       "dayNumber": 4,
-      "title": "Datenbank Design",
-      "description": "Datenbank-Design und Optimierung",
+      "title": "Database Design",
+      "description": "Database Design and Optimization",
       "tasks": [
         "Schema Design",
         "Relationships",
@@ -668,8 +668,8 @@
     {
       "id": 35,
       "dayNumber": 5,
-      "title": "Projekt Woche 7",
-      "description": "Full-Stack Projekt",
+      "title": "Week 7 Project",
+      "description": "Full-Stack Project",
       "tasks": [
         "Database Design",
         "API Integration",
