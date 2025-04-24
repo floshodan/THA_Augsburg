@@ -11,9 +11,10 @@ interface Message {
 interface InterviewDialogProps {
   isOpen: boolean;
   onClose: () => void;
+  review?: string;
 }
 
-export default function InterviewDialog({ isOpen, onClose }: InterviewDialogProps) {
+export default function InterviewDialog({ isOpen, onClose, review = "" }: InterviewDialogProps) {
   const [messages, setMessages] = useState<Message[]>([{
     id: 1,
     text: "Hallo! Ich bin Ihr Interviewer. Lassen Sie uns mit dem Interview beginnen. Bitte stellen Sie sich kurz vor.",
@@ -23,7 +24,55 @@ export default function InterviewDialog({ isOpen, onClose }: InterviewDialogProp
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const initialMessageSent = useRef(false);
   const { data: onboardingData } = useOnboardingStore();
+
+  const resetChat = async () => {
+    // Reset messages to initial greeting
+    setMessages([{
+      id: Date.now(),
+      text: "Hallo! Ich bin Ihr Interviewer. Lassen Sie uns mit dem Interview beginnen. Bitte stellen Sie sich kurz vor.",
+      isBot: true,
+      timestamp: new Date()
+    }]);
+
+    try {
+      // Reset the interview session
+      await fetch('http://agent.floshodan.io:5678/webhook/reset-interviewer', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionId: 1
+        })
+      });
+      
+      // Send initial "Hei!" message again
+      const response = await fetch('http://agent.floshodan.io:5678/webhook/interviewer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionId: 1,
+          message: "Hei!",
+          mode: "interview",
+          review: review
+        }),
+      });
+      const data = await response.json();
+      setMessages(prev => [...prev, {
+        id: Date.now(),
+        text: data.response || data.output || 'No response received',
+        isBot: true,
+        timestamp: new Date()
+      }]);
+    } catch (error) {
+      console.error('Error resetting chat:', error);
+    }
+  };
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -32,38 +81,32 @@ export default function InterviewDialog({ isOpen, onClose }: InterviewDialogProp
     }
   }, [messages]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputText.trim() || isLoading) return;
-
-    const newMessage: Message = {
-      id: Date.now(),
-      text: inputText,
-      isBot: false,
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, newMessage]);
-    setInputText('');
-    setIsLoading(true);
-
+  const sendMessage = async (message: string) => {
     try {
-      const apiResponse = await fetch('http://agent.floshodan.io:5678/webhook/chat_responder_agent', {
+      const apiResponse = await fetch('http://agent.floshodan.io:5678/webhook/interviewer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          knowledge: onboardingData.selectedExperiences.length > 0 ? onboardingData.selectedExperiences : ["nothing"],
-          wantKnown: onboardingData.interestedExperiences.length > 0 ? onboardingData.interestedExperiences : ["nothing"],
-          description: onboardingData.additionalExperience || "nothing",
           sessionId: 1,
-          message: inputText,
-          mode: "interview" // Add interview mode flag
+          message: message.trim() === "" ? "Hei!" : message,
+          mode: "interview",
+          review: review
         }),
       });
 
       const responseData = await apiResponse.json();
+      
+      if (message) { // Only add user message if there is one
+        const newMessage: Message = {
+          id: Date.now(),
+          text: message,
+          isBot: false,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, newMessage]);
+      }
       
       const botResponse: Message = {
         id: Date.now() + 1,
@@ -73,6 +116,7 @@ export default function InterviewDialog({ isOpen, onClose }: InterviewDialogProp
       };
       
       setMessages(prev => [...prev, botResponse]);
+      return true;
     } catch (error) {
       console.error('Error sending message:', error);
       const errorResponse: Message = {
@@ -82,9 +126,20 @@ export default function InterviewDialog({ isOpen, onClose }: InterviewDialogProp
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorResponse]);
-    } finally {
-      setIsLoading(false);
+      return false;
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputText.trim() || isLoading) return;
+
+    setIsLoading(true);
+    const messageText = inputText;
+    setInputText('');
+    
+    await sendMessage(messageText);
+    setIsLoading(false);
   };
 
   if (!isOpen) return null;
@@ -102,12 +157,20 @@ export default function InterviewDialog({ isOpen, onClose }: InterviewDialogProp
         {/* Header */}
         <div className="p-4 bg-[#4B2E83] text-white rounded-t-lg flex justify-between items-center">
           <h3 className="font-medium">Mock Interview</h3>
-          <button
-            onClick={onClose}
-            className="text-white hover:text-gray-200 text-xl font-medium"
-          >
-            ×
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={resetChat}
+              className="text-white hover:text-gray-200 text-sm font-medium px-2 py-1 rounded border border-white/30 hover:border-white/50 transition-colors"
+            >
+              Reset
+            </button>
+            <button
+              onClick={onClose}
+              className="text-white hover:text-gray-200 text-xl font-medium"
+            >
+              ×
+            </button>
+          </div>
         </div>
 
         {/* Chat Area */}

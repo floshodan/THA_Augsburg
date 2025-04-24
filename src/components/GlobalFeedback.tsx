@@ -118,6 +118,7 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
       <InterviewDialog 
         isOpen={showInterviewDialog}
         onClose={() => setShowInterviewDialog(false)}
+        review={feedback?.longAnswer || ""}
       />
     </div>
   );
