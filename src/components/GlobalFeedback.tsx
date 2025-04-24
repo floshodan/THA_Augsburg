@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { DayNode } from '../types/course';
+import InterviewDialog from './InterviewDialog';
 
 interface GlobalFeedbackProps {
   days: DayNode[];
@@ -18,6 +19,7 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showLongAnswer, setShowLongAnswer] = useState(false);
+  const [showInterviewDialog, setShowInterviewDialog] = useState(false);
 
   // Calculate total progress
   const totalProgress = useMemo(() => {
@@ -103,15 +105,20 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
                 <button
                   className="px-4 py-2 bg-[#4B2E83] text-white rounded-lg hover:bg-[#3b2566] transition-colors"
                   title="Start Interactive mock job interview"
+                  onClick={() => setShowInterviewDialog(true)}
                 >
                   Start Interview
                 </button>
-            
               </div>
             </div>
           </div>
         ) : null}
       </div>
+
+      <InterviewDialog 
+        isOpen={showInterviewDialog}
+        onClose={() => setShowInterviewDialog(false)}
+      />
     </div>
   );
 } 
