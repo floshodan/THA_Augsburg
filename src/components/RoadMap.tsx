@@ -30,6 +30,24 @@ const getProgressColor = (percentage: number): string => {
   return `bg-${getColorClass(percentage)}`;
 };
 
+const getProgressColorClass = (percentage: number, status: string): string => {
+  if (status === 'upcoming') return 'bg-gray-300';
+  if (percentage === 100) return 'bg-green-500';
+  if (percentage >= 75) return 'bg-green-400';
+  if (percentage >= 50) return 'bg-yellow-400';
+  if (percentage >= 25) return 'bg-orange-400';
+  return 'bg-red-500';
+};
+
+const getBorderColorClass = (percentage: number, status: string): string => {
+  if (status === 'upcoming') return 'border-gray-300';
+  if (percentage === 100) return 'border-green-500';
+  if (percentage >= 75) return 'border-green-400';
+  if (percentage >= 50) return 'border-yellow-400';
+  if (percentage >= 25) return 'border-orange-400';
+  return 'border-red-500';
+};
+
 // Custom hooks
 const useScrollPosition = (selectedNode: number | null, containerRef: React.RefObject<HTMLDivElement | null>) => {
   const calculateAndScrollToOptimalPosition = useCallback(() => {
@@ -202,7 +220,7 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                       <div
                         className={`p-4 rounded-lg border-2 transition-all ${
                           day.status === 'upcoming' ? 'bg-gray-50 opacity-60 cursor-not-allowed' : 'bg-white'
-                        } ${getBorderColor(day)}`}
+                        } ${getBorderColorClass(day.progress.percentage, day.status)}`}
                       >
                         <div className={`text-lg font-semibold mb-2 ${
                           day.status === 'current' ? 'text-[#4B2E83]' : 
@@ -215,7 +233,7 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                         <div className="mt-2">
                           <div className="w-full bg-gray-100 rounded-full h-2.5">
                             <div 
-                              className={`h-2.5 rounded-full ${getProgressColor(day.progress.percentage)}`}
+                              className={`h-2.5 rounded-full ${getProgressColorClass(day.progress.percentage, day.status)}`}
                               style={{ width: `${day.progress.percentage}%` }}
                             />
                           </div>
