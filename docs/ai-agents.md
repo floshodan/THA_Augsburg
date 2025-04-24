@@ -2,6 +2,18 @@
 
 The AI agents system in THA Augsburg is designed to provide intelligent, context-aware assistance to students learning to code. Each agent has specific responsibilities and works in concert with others to deliver comprehensive support.
 
+## Implementation Overview
+
+![AI Agent Workflow](../images/n8n-workflow.png)
+
+The diagram above shows our AI agent implementation in n8n:
+- **Webhook Integration**: Entry point for frontend requests
+- **AI Agent1 (Tools Agent)**: Main agent handling code analysis and feedback
+  - Integrated with OpenAI Chat Model for intelligent processing
+  - Uses Window Buffer for context management
+  - Leverages Vector Store Tool for knowledge retrieval
+- **Response Generation**: Structured feedback delivery back to frontend
+
 ## Agent Architecture
 
 ### 1. Code Analysis Agent

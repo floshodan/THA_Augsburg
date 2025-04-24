@@ -2,6 +2,15 @@
 
 n8n serves as the backbone of THA Augsburg's automation system, orchestrating the interaction between the frontend, AI agents, and data storage systems.
 
+## Workflow Overview
+
+![n8n Workflow Diagram](../images/n8n-workflow.png)
+
+The diagram above shows our main n8n workflows:
+- Test workflow with Pinecone Vector Store integration
+- AI Agent workflow with OpenAI integration and Vector Store Tool
+- Webhook handling and response generation
+
 ## Core Workflows
 
 ### 1. Code Submission Workflow
