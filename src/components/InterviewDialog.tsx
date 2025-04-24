@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useOnboardingStore } from '../store/onboardingStore';
+import ApiService from '../services/ApiService';
 
 interface Message {
   id: number;
@@ -38,34 +39,19 @@ export default function InterviewDialog({ isOpen, onClose, review = "" }: Interv
 
     try {
       // Reset the interview session
-      await fetch('http://agent.floshodan.io:5678/webhook/reset-interviewer', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sessionId: 1
-        })
-      });
+      await ApiService.resetInterviewDialog(1);
       
       // Send initial "Hei!" message again
-      const response = await fetch('http://agent.floshodan.io:5678/webhook/interviewer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sessionId: 1,
-          message: "Hei!",
-          mode: "interview",
-          review: review
-        }),
+      const response = await ApiService.sendInterviewDialogMessage({
+        sessionId: 1,
+        message: "Hei!",
+        mode: "interview",
+        review: review
       });
-      const data = await response.json();
+
       setMessages(prev => [...prev, {
         id: Date.now(),
-        text: data.response || data.output || 'No response received',
+        text: response.response || response.output || 'No response received',
         isBot: true,
         timestamp: new Date()
       }]);
@@ -83,20 +69,12 @@ export default function InterviewDialog({ isOpen, onClose, review = "" }: Interv
 
   const sendMessage = async (message: string) => {
     try {
-      const apiResponse = await fetch('http://agent.floshodan.io:5678/webhook/interviewer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sessionId: 1,
-          message: message.trim() === "" ? "Hei!" : message,
-          mode: "interview",
-          review: review
-        }),
+      const response = await ApiService.sendInterviewDialogMessage({
+        sessionId: 1,
+        message: message.trim() === "" ? "Hei!" : message,
+        mode: "interview",
+        review: review
       });
-
-      const responseData = await apiResponse.json();
       
       if (message) { // Only add user message if there is one
         const newMessage: Message = {
@@ -110,7 +88,7 @@ export default function InterviewDialog({ isOpen, onClose, review = "" }: Interv
       
       const botResponse: Message = {
         id: Date.now() + 1,
-        text: responseData.response || responseData.output || 'No response received',
+        text: response.response || response.output || 'No response received',
         isBot: true,
         timestamp: new Date()
       };

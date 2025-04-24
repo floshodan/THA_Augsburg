@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import ApiService from '../services/ApiService';
 
 const mockPositivCode = {
   "task_description": "Add a list of 3 favorite programming languages using <ul> and <li>.",
@@ -13,6 +14,14 @@ const mockNegativeCode = {
   "solution_code": "<ul>\n  <li>JavaScript</li>\n  <li>Python</li>\n  <li>Ruby</li>\n</ul>",
   "test_code": "myTest: Ensure there are 3 <li> items inside a <ul>.",
   "submitted_code": "<ul>\n  <li>JavaScript</li>\n  <li>Pythi>\n  <li>Ruby</li>",
+  "test_results": ""
+};
+
+const emptyCode = {
+  "task_description": "",
+  "solution_code": "",
+  "test_code": "",
+  "submitted_code": "",
   "test_results": ""
 };
 
@@ -67,29 +76,11 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const apiUrl = day.progress.percentage === 100
-          ? 'http://agent.floshodan.io:5678/webhook/good_code_response'
-          : 'http://agent.floshodan.io:5678/webhook/grade-code';
-
-        console.log(JSON.stringify({
-          key: "value",
-          code: day.progress.percentage === 0 ? "" : (day.progress.percentage === 100 ? mockPositivCode : mockNegativeCode)
-        }))
-
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(day.progress.percentage === 0 ? "" : (day.progress.percentage === 100 ? mockPositivCode : mockNegativeCode)),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch feedback');
-        }
-
-        const data = await response.json();
-        setFeedback(data);
+        const codeToSubmit = day.progress.percentage === 0 
+          ? emptyCode 
+          : (day.progress.percentage === 100 ? mockPositivCode : mockNegativeCode);
+        const response = await ApiService.getDailyFeedback(codeToSubmit);
+        setFeedback(response);
         setIsLoading(false);
         onFeedbackLoaded?.();
       } catch (err) {

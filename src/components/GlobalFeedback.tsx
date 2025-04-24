@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { DayNode } from '../types/course';
 import InterviewDialog from './InterviewDialog';
+import ApiService from '../services/ApiService';
 
 interface GlobalFeedbackProps {
   days: DayNode[];
@@ -37,16 +38,11 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
     const fetchFeedback = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('http://agent.floshodan.io:5678/webhook/1836e87e-4937-4db2-b8c0-6131d633a0a6', {
-          method: 'POST',
-          body: 'coolResponse=1'
-        });
-        const data = await response.json();
-        console.log(data);
+        const response = await ApiService.getGlobalFeedback();
         
         setFeedback({
-          shortAnswer: data.output.shortAnswer,
-          longAnswer: data.output.longAnswer,
+          shortAnswer: response.output.shortAnswer,
+          longAnswer: response.output.longAnswer,
           timestamp: new Date().toISOString()
         });
         setError(null);

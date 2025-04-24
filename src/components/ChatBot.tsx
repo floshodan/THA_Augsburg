@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { BsChatDotsFill } from 'react-icons/bs';
 import { useOnboardingStore } from '../store/onboardingStore';
+import ApiService from '../services/ApiService';
 
 interface Message {
   id: number;
@@ -10,14 +11,18 @@ interface Message {
   isBot: boolean;
   timestamp: Date;
   data?: {
-    quality?: { score: number; description: string };
-    readability?: { score: number; description: string };
-    structure?: { score: number; description: string };
-    efficiency?: { score: number; description: string };
-    tips?: string;
-    progress_checkpoint?: {
-      problems: string;
-      category: string;
+    response?: string;
+    output?: string;
+    data?: {
+      quality?: { score: number; description: string };
+      readability?: { score: number; description: string };
+      structure?: { score: number; description: string };
+      efficiency?: { score: number; description: string };
+      tips?: string;
+      progress_checkpoint?: {
+        problems: string;
+        category: string;
+      };
     };
   };
 }
@@ -78,22 +83,13 @@ export default function ChatBot() {
     setIsLoading(true);
 
     try {
-      const apiResponse = await fetch('http://agent.floshodan.io:5678/webhook/chat_responder_agent', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          knowledge: onboardingData.selectedExperiences.length > 0 ? onboardingData.selectedExperiences : ["nothing"],
-          wantKnown: onboardingData.interestedExperiences.length > 0 ? onboardingData.interestedExperiences : ["nothing"],
-          description: onboardingData.additionalExperience || "nothing",
-          sessionId: 1,
-          message: inputText
-        }),
+      const responseData = await ApiService.sendChatMessage({
+        knowledge: onboardingData.selectedExperiences.length > 0 ? onboardingData.selectedExperiences : ["nothing"],
+        wantKnown: onboardingData.interestedExperiences.length > 0 ? onboardingData.interestedExperiences : ["nothing"],
+        description: onboardingData.additionalExperience || "nothing",
+        sessionId: 1,
+        message: inputText
       });
-
-      const responseData = await apiResponse.json();
-      console.log(responseData);
       
       const botResponse: Message = {
         id: Date.now() + 1,
