@@ -1,5 +1,47 @@
 import { useState, useEffect } from 'react';
 
+const mockPositivCode = {
+  "task_description": "Add a list of 3 favorite programming languages using <ul> and <li>.",
+  "solution_code": "<ul>\n  <li>JavaScript</li>\n  <li>Python</li>\n  <li>Ruby</li>\n</ul>",
+  "test_code": "myTest: Ensure there are 3 <li> items inside a <ul>.",
+  "submitted_code": "<ul>\n  <li>JavaScript</li>\n  <li>Python</li>\n  <li>Ruby</li>\n</ul>",
+  "test_results": ""
+};
+
+const mockNegativeCode = {
+  "task_description": "Add a list of 3 favorite programming languages using <ul> and <li>.",
+  "solution_code": "<ul>\n  <li>JavaScript</li>\n  <li>Python</li>\n  <li>Ruby</li>\n</ul>",
+  "test_code": "myTest: Ensure there are 3 <li> items inside a <ul>.",
+  "submitted_code": "<ul>\n  <li>JavaScript</li>\n  <li>Pythi>\n  <li>Ruby</li>",
+  "test_results": ""
+};
+
+interface FeedbackResponse {
+  output: {
+    progress_checkpoint: {
+      problems: string;
+      category: string;
+    };
+    quality: {
+      score: number;
+      description: string;
+    };
+    readability: {
+      score: number;
+      description: string;
+    };
+    structure: {
+      score: number;
+      description: string;
+    };
+    efficiency: {
+      score: number;
+      description: string;
+    };
+    tips: string;
+  };
+}
+
 interface DailyFeedbackProps {
   day: {
     id: number;
@@ -17,7 +59,7 @@ interface DailyFeedbackProps {
 }
 
 export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyFeedbackProps) {
-  const [feedback, setFeedback] = useState<string>('');
+  const [feedback, setFeedback] = useState<FeedbackResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [acknowledged, setAcknowledged] = useState<'not-understood' | 'no-time' | null>(null);
@@ -25,15 +67,21 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const response = await fetch('http://agent.floshodan.io:5678/webhook/1836e87e-4937-4db2-b8c0-6131d633a0a6', {
+        const apiUrl = day.progress.percentage === 100
+          ? 'http://agent.floshodan.io:5678/webhook/good_code_response'
+          : 'http://agent.floshodan.io:5678/webhook/grade-code';
+
+        console.log(JSON.stringify({
+          key: "value",
+          code: day.progress.percentage === 0 ? "" : (day.progress.percentage === 100 ? mockPositivCode : mockNegativeCode)
+        }))
+
+        const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            key: "value",
-            code: "your code here"
-          }),
+          body: JSON.stringify(day.progress.percentage === 0 ? "" : (day.progress.percentage === 100 ? mockPositivCode : mockNegativeCode)),
         });
 
         if (!response.ok) {
@@ -41,7 +89,7 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
         }
 
         const data = await response.json();
-        setFeedback(data.output);
+        setFeedback(data);
         setIsLoading(false);
         onFeedbackLoaded?.();
       } catch (err) {
@@ -52,7 +100,7 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
     };
 
     fetchFeedback();
-  }, [onFeedbackLoaded]);
+  }, [day.progress.percentage, onFeedbackLoaded]);
 
   const handleAcknowledge = (type: 'not-understood' | 'no-time') => {
     setAcknowledged(type);
@@ -112,14 +160,47 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
             </div>
           ) : error ? (
             <div className="text-red-500 text-sm">{error}</div>
-          ) : (
+          ) : feedback ? (
             <div className="space-y-4">
               <div className="bg-gray-50 rounded-lg p-4">
-                {feedback.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="text-gray-600 text-sm mb-3 last:mb-0">
-                    {paragraph}
-                  </p>
-                ))}
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-gray-800 mb-2">Fortschritts-Checkpoint</h4>
+                    <p className="text-gray-600 text-sm">{feedback.output.progress_checkpoint.problems}</p>
+                    <p className="text-gray-500 text-xs mt-1">Kategorie: {feedback.output.progress_checkpoint.category}</p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="font-semibold text-gray-800 mb-2">Qualität</h4>
+                      <p className="text-gray-600 text-sm">{feedback.output.quality.description}</p>
+                      <p className="text-gray-500 text-xs mt-1">Score: {feedback.output.quality.score}/10</p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-gray-800 mb-2">Lesbarkeit</h4>
+                      <p className="text-gray-600 text-sm">{feedback.output.readability.description}</p>
+                      <p className="text-gray-500 text-xs mt-1">Score: {feedback.output.readability.score}/10</p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-gray-800 mb-2">Struktur</h4>
+                      <p className="text-gray-600 text-sm">{feedback.output.structure.description}</p>
+                      <p className="text-gray-500 text-xs mt-1">Score: {feedback.output.structure.score}/10</p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-gray-800 mb-2">Effizienz</h4>
+                      <p className="text-gray-600 text-sm">{feedback.output.efficiency.description}</p>
+                      <p className="text-gray-500 text-xs mt-1">Score: {feedback.output.efficiency.score}/10</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-gray-800 mb-2">Tipps</h4>
+                    <p className="text-gray-600 text-sm">{feedback.output.tips}</p>
+                  </div>
+                </div>
               </div>
               
               <div className="flex gap-3">
@@ -162,7 +243,7 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
                 </button>
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>
