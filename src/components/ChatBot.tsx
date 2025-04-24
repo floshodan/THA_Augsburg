@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { FaQuestionCircle } from 'react-icons/fa';
+import { BsChatDotsFill } from 'react-icons/bs';
 import { useOnboardingStore } from '../store/onboardingStore';
 
 interface Message {
@@ -23,7 +23,7 @@ interface Message {
 }
 
 export default function ChatBot() {
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -126,7 +126,7 @@ export default function ChatBot() {
         className="fixed bottom-5 right-4 w-12 h-12 bg-[#4B2E83] text-white rounded-full shadow-lg flex items-center justify-center hover:bg-[#3b2566] transition-colors z-50"
         title="Ask your teacher"
       >
-        <FaQuestionCircle className="w-6 h-6" />
+        <BsChatDotsFill className="w-5 h-5" />
       </button>
 
       {/* Expanded State - Only visible when not minimized */}

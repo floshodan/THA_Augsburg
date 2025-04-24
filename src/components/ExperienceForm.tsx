@@ -309,7 +309,7 @@ export default function ExperienceForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-6">
+    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-6 bg-white">
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Your Experience</h2>
         <p className="text-gray-600">
