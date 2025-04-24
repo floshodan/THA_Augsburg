@@ -87,15 +87,28 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
         ) : feedback ? (
           <div className="space-y-4">
             <p className="text-gray-700">{showLongAnswer ? feedback.longAnswer : feedback.shortAnswer}</p>
-            <button
-              onClick={() => setShowLongAnswer(!showLongAnswer)}
-              className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200"
-            >
-              {showLongAnswer ? 'Show less' : 'Show more'}
-            </button>
-            <p className="text-xs text-gray-500">
-              Last update: {new Date(feedback.timestamp).toLocaleDateString()}
-            </p>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => setShowLongAnswer(!showLongAnswer)}
+                  className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200"
+                >
+                  {showLongAnswer ? 'Show less' : 'Show more'}
+                </button>
+                <p className="text-xs text-gray-500">
+                  Last update: {new Date(feedback.timestamp).toLocaleDateString()}
+                </p>
+              </div>
+              <div className="relative">
+                <button
+                  className="px-4 py-2 bg-[#4B2E83] text-white rounded-lg hover:bg-[#3b2566] transition-colors"
+                  title="Start Interactive mock job interview"
+                >
+                  Start Interview
+                </button>
+            
+              </div>
+            </div>
           </div>
         ) : null}
       </div>
