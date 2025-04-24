@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { FaQuestionCircle } from 'react-icons/fa';
+import { useOnboardingStore } from '../store/onboardingStore';
 
 interface Message {
   id: number;
@@ -27,6 +28,7 @@ export default function ChatBot() {
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const { data: onboardingData } = useOnboardingStore();
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -76,25 +78,29 @@ export default function ChatBot() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://agent.floshodan.io:5678/webhook/grade-code', {
+      const apiResponse = await fetch('http://agent.floshodan.io:5678/webhook/chat_responder_agent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          key: "value",
-          code: inputText
+          knowledge: onboardingData.selectedExperiences.length > 0 ? onboardingData.selectedExperiences : ["nothing"],
+          wantKnown: onboardingData.interestedExperiences.length > 0 ? onboardingData.interestedExperiences : ["nothing"],
+          description: onboardingData.additionalExperience || "nothing",
+          sessionId: 1,
+          message: inputText
         }),
       });
 
-      const data = await response.json();
+      const responseData = await apiResponse.json();
+      console.log(responseData);
       
       const botResponse: Message = {
         id: Date.now() + 1,
-        text: formatResponse(data.output),
+        text: responseData.response || responseData.output || 'Keine Antwort erhalten',
         isBot: true,
         timestamp: new Date(),
-        data: data.output
+        data: responseData
       };
       
       setMessages(prev => [...prev, botResponse]);

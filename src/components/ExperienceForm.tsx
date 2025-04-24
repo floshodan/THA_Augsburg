@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { useOnboardingStore } from '../store/onboardingStore';
 
 interface ExperienceOption {
   id: string;
@@ -94,14 +95,15 @@ type TabType = 'know' | 'want' | 'github' | 'linkedin';
 
 export default function ExperienceForm() {
   const router = useRouter();
-  const [formData, setFormData] = useState<FormData>({
-    selectedExperiences: [],
-    interestedExperiences: [],
-    additionalExperience: '',
-    githubProfile: '',
-    linkedinProfile: '',
-    githubConnected: false,
-    linkedinConnected: false
+  const { data, setData } = useOnboardingStore();
+  const [formData, setFormData] = useState({
+    selectedExperiences: data.selectedExperiences,
+    interestedExperiences: data.interestedExperiences,
+    additionalExperience: data.additionalExperience,
+    githubProfile: data.githubProfile,
+    linkedinProfile: data.linkedinProfile,
+    githubConnected: data.githubConnected,
+    linkedinConnected: data.linkedinConnected
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<TabType>('know');
@@ -143,8 +145,8 @@ export default function ExperienceForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Create a simplified JSON object with just titles
-      const selectedTopics = {
+      setData(formData);
+      console.log('Selected Topics:', JSON.stringify({
         known: formData.selectedExperiences.map(id => {
           const option = experienceOptions.find(opt => opt.id === id);
           return option?.title || '';
@@ -154,9 +156,7 @@ export default function ExperienceForm() {
           return option?.title || '';
         }),
         additional: formData.additionalExperience
-      };
-
-      console.log('Selected Topics:', JSON.stringify(selectedTopics, null, 2));
+      }, null, 2));
       router.push('/dashboard');
     } catch (error) {
       console.error('Error submitting experience:', error);

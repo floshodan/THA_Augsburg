@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useOnboardingStore } from '../store/onboardingStore';
 
 interface FormData {
   firstName: string;
@@ -16,14 +17,15 @@ interface FormData {
 
 export default function OnboardingForm() {
   const [step, setStep] = useState(1);
+  const { data, setData } = useOnboardingStore();
   const [formData, setFormData] = useState<FormData>({
-    firstName: '',
-    lastName: '',
-    hideEmail: false,
-    experience: '',
-    goal: 'frontend',
-    preferences: [],
-    learningStyle: 'visual',
+    firstName: data.firstName,
+    lastName: data.lastName,
+    hideEmail: data.hideEmail,
+    experience: data.experience,
+    goal: data.goal,
+    preferences: data.preferences,
+    learningStyle: data.learningStyle,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -31,6 +33,7 @@ export default function OnboardingForm() {
     if (step < 4) {
       setStep(step + 1);
     } else {
+      setData(formData);
       console.log('Formular abgeschlossen:', formData);
     }
   };
