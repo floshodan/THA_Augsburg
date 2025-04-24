@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import DailyFeedback from './DailyFeedback';
 
 interface Progress {
@@ -26,13 +26,95 @@ interface RoadMapProps {
   showTitle?: boolean;
 }
 
+const getColorClass = (percentage: number): string => {
+  if (percentage === 100) return 'green-500';
+  if (percentage >= 75) return 'green-400';
+  if (percentage >= 50) return 'yellow-400';
+  if (percentage >= 25) return 'orange-400';
+  return 'red-500';
+};
+
+const getBorderColor = (day: DayNode): string => {
+  if (day.status === 'upcoming') return 'border-gray-200';
+  if (day.status === 'current') return 'border-[#4B2E83]';
+  return `border-${getColorClass(day.progress.percentage)}`;
+};
+
+const getProgressColor = (percentage: number): string => {
+  return `bg-${getColorClass(percentage)}`;
+};
+
+const useScrollPosition = (selectedNode: number | null, containerRef: React.RefObject<HTMLDivElement | null>) => {
+  const calculateAndScrollToOptimalPosition = useCallback(() => {
+    if (selectedNode && containerRef.current) {
+      const nodeElement = containerRef.current.querySelector(`[data-node-id="${selectedNode}"]`);
+      if (nodeElement) {
+        const mainContent = document.querySelector('main.overflow-y-auto');
+        
+        if (mainContent) {
+          const nodeRect = nodeElement.getBoundingClientRect();
+          const mainContentRect = mainContent.getBoundingClientRect();
+          const nodeOffsetTop = nodeRect.top - mainContentRect.top + mainContent.scrollTop;
+          const targetScroll = nodeOffsetTop - 40;
+
+          mainContent.scrollTo({
+            top: targetScroll,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+  }, [selectedNode]);
+
+  return calculateAndScrollToOptimalPosition;
+};
+
+const useNodePosition = (selectedNode: number | null, containerRef: React.RefObject<HTMLDivElement | null>) => {
+  const [position, setPosition] = useState<{ top: number; left: number; width: number } | null>(null);
+
+  useEffect(() => {
+    if (selectedNode && containerRef.current) {
+      const nodeElement = containerRef.current.querySelector(`[data-node-id="${selectedNode}"]`);
+      if (nodeElement) {
+        const rect = nodeElement.getBoundingClientRect();
+        const containerRect = containerRef.current.getBoundingClientRect();
+        
+        setPosition({
+          top: rect.bottom - containerRect.top,
+          left: 0,
+          width: containerRect.width
+        });
+      }
+    } else {
+      setPosition(null);
+    }
+  }, [selectedNode]);
+
+  return position;
+};
+
 export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMapProps) {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const [path, setPath] = useState<string>('');
-  const [selectedNodePosition, setSelectedNodePosition] = useState<{ top: number; left: number; width: number } | null>(null);
 
-  // Berechne den SVG-Pfad basierend auf den Node-Positionen
+  const calculateAndScrollToOptimalPosition = useScrollPosition(selectedNode, containerRef);
+  const selectedNodePosition = useNodePosition(selectedNode, containerRef);
+
+  // Group days by week
+  const weekGroups = useMemo(() => {
+    return days.reduce((acc, day) => {
+      const weekIndex = Math.floor((day.id - 1) / 5);
+      if (!acc[weekIndex]) {
+        acc[weekIndex] = [];
+      }
+      acc[weekIndex].push(day);
+      return acc;
+    }, {} as Record<number, typeof days>);
+  }, [days]);
+
+  // Calculate SVG path
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -66,54 +148,24 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
     setPath(pathD);
   }, [days]);
 
-  // Update position when selected node changes
+  // Click outside handler
   useEffect(() => {
-    if (selectedNode && containerRef.current) {
-      const nodeElement = containerRef.current.querySelector(`[data-node-id="${selectedNode}"]`);
-      if (nodeElement) {
-        const rect = nodeElement.getBoundingClientRect();
-        const containerRect = containerRef.current.getBoundingClientRect();
-        setSelectedNodePosition({
-          top: rect.bottom - containerRect.top,
-          left: 0,
-          width: containerRect.width
-        });
+    function handleClickOutside(event: MouseEvent) {
+      if (overlayRef.current && !overlayRef.current.contains(event.target as Node)) {
+        const clickedElement = event.target as HTMLElement;
+        const isTagButton = clickedElement.closest('.node-button');
+        
+        if (!isTagButton) {
+          setSelectedNode(null);
+        }
       }
-    } else {
-      setSelectedNodePosition(null);
     }
-  }, [selectedNode]);
 
-  // Gruppiere Tage nach Wochen
-  const weekGroups = days.reduce((acc, day) => {
-    const weekIndex = Math.floor((day.id - 1) / 5);
-    if (!acc[weekIndex]) {
-      acc[weekIndex] = [];
-    }
-    acc[weekIndex].push(day);
-    return acc;
-  }, {} as Record<number, typeof days>);
-
-  // Funktion zur Bestimmung der Fortschrittsfarbe (ohne 'bg-' Präfix)
-  const getColorClass = (percentage: number) => {
-    if (percentage === 100) return 'green-500';
-    if (percentage >= 75) return 'green-400';
-    if (percentage >= 50) return 'yellow-400';
-    if (percentage >= 25) return 'orange-400';
-    return 'red-500';
-  };
-
-  // Funktion zur Bestimmung der Rahmenfarbe
-  const getBorderColor = (day: DayNode) => {
-    if (day.status === 'upcoming') return 'border-gray-200';
-    if (day.status === 'current') return 'border-[#4B2E83]';
-    return `border-${getColorClass(day.progress.percentage)}`;
-  };
-
-  // Funktion zur Bestimmung der Fortschrittsbalkenfarbe
-  const getProgressColor = (percentage: number) => {
-    return `bg-${getColorClass(percentage)}`;
-  };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="flex-1 p-6 bg-white rounded-lg shadow-lg">
@@ -125,7 +177,6 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
       )}
 
       <div ref={containerRef} className="relative">
-        {/* Verbindungslinien */}
         <svg 
           className="absolute top-0 left-0 w-full h-full" 
           style={{ zIndex: 0 }}
@@ -140,7 +191,6 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
           />
         </svg>
 
-        {/* Nodes */}
         <div className="relative space-y-16">
           {Object.entries(weekGroups).map(([weekIndex, weekDays]) => (
             <div 
@@ -172,7 +222,6 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
                           day.status === 'upcoming' ? 'text-gray-400' : 'text-gray-900'
                         }`}>{day.title}</h3>
                         
-                        {/* Fortschrittsanzeige */}
                         <div className="mt-2">
                           <div className="w-full bg-gray-100 rounded-full h-2.5">
                             <div 
@@ -195,10 +244,10 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
           ))}
         </div>
 
-        {/* Feedback Overlay */}
         {selectedNode && selectedNodePosition && (
           <div 
-            className="absolute z-10"
+            ref={overlayRef}
+            className="absolute z-10 mb-16"
             style={{
               top: `${selectedNodePosition.top}px`,
               left: `${selectedNodePosition.left}px`,
@@ -208,6 +257,7 @@ export default function RoadMap({ days, weekNumber, showTitle = false }: RoadMap
             <DailyFeedback
               day={days.find(day => day.id === selectedNode)!}
               onClose={() => setSelectedNode(null)}
+              onFeedbackLoaded={calculateAndScrollToOptimalPosition}
             />
           </div>
         )}

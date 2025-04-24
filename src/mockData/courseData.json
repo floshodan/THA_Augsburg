@@ -54,6 +54,7 @@
   "weekDays": [
     {
       "id": 1,
+      "weekNumber": 1,
       "dayNumber": 1,
       "title": "HTML Grundlagen",
       "description": "Einführung in HTML5 und semantische Elemente",
@@ -299,9 +300,9 @@
       ],
       "status": "completed",
       "progress": {
-        "completedTasks": 4,
+        "completedTasks": 0,
         "totalTasks": 4,
-        "percentage": 100
+        "percentage": 0
       }
     },
     {

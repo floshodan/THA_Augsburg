@@ -13,9 +13,10 @@ interface DailyFeedbackProps {
     };
   };
   onClose: () => void;
+  onFeedbackLoaded?: () => void;
 }
 
-export default function DailyFeedback({ day, onClose }: DailyFeedbackProps) {
+export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyFeedbackProps) {
   const [feedback, setFeedback] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,16 +42,17 @@ export default function DailyFeedback({ day, onClose }: DailyFeedbackProps) {
 
         const data = await response.json();
         setFeedback(data.output);
+        setIsLoading(false);
+        onFeedbackLoaded?.();
       } catch (err) {
         setError('Failed to load feedback. Please try again later.');
         console.error('Error fetching feedback:', err);
-      } finally {
         setIsLoading(false);
       }
     };
 
     fetchFeedback();
-  }, []);
+  }, [onFeedbackLoaded]);
 
   const handleAcknowledge = (type: 'not-understood' | 'no-time') => {
     setAcknowledged(type);
