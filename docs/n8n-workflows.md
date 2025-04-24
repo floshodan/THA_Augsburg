@@ -7,9 +7,7 @@ n8n serves as the backbone of THA Augsburg's automation system, orchestrating th
 ![n8n Workflow Diagram](../images/n8n-workflow.png)
 
 The diagram above shows our main n8n workflows:
-- Test workflow with Pinecone Vector Store integration
-- AI Agent workflow with OpenAI integration and Vector Store Tool
-- Webhook handling and response generation
+- Our n8n workflows and their endpoints that will be used by our app
 
 ## Core Workflows
 
@@ -95,17 +93,3 @@ The diagram above shows our main n8n workflows:
 - Integration testing
 - Load testing
 - Error scenario testing
-
-## Monitoring and Maintenance
-
-### Health Monitoring
-- Workflow execution tracking
-- Performance metrics
-- Error logging
-- Resource usage
-
-### Maintenance Procedures
-- Regular updates
-- Performance optimization
-- Error resolution
-- Capacity planning
