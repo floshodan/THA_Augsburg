@@ -8,7 +8,8 @@ interface GlobalFeedbackProps {
 }
 
 interface FeedbackData {
-  message: string;
+  shortAnswer: string;
+  longAnswer: string;
   timestamp: string;
 }
 
@@ -16,6 +17,7 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showLongAnswer, setShowLongAnswer] = useState(false);
 
   // Berechne den Gesamtfortschritt
   const totalProgress = useMemo(() => {
@@ -33,17 +35,18 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
     const fetchFeedback = async () => {
       try {
         setIsLoading(true);
-        // Hier würde der tatsächliche API-Call stehen
-        // const response = await fetch('/api/global-feedback');
-        // const data = await response.json();
+        const response = await fetch('http://agent.floshodan.io:5678/webhook/1836e87e-4937-4db2-b8c0-6131d633a0a6', {
+          method: 'POST',
+          body: 'coolResponse=1'
+        });
+        const data = await response.json();
+        console.log(data);
         
-        // Temporärer Mock-Daten
-        const mockData: FeedbackData = {
-          message: "Super Fortschritt! Du hast bereits 75% des Bootcamps abgeschlossen. Weiter so!",
+        setFeedback({
+          shortAnswer: data.output.shortAnswer,
+          longAnswer: data.output.longAnswer,
           timestamp: new Date().toISOString()
-        };
-        
-        setFeedback(mockData);
+        });
         setError(null);
       } catch (err) {
         setError('Fehler beim Laden des Feedbacks');
@@ -82,12 +85,18 @@ export default function GlobalFeedback({ days }: GlobalFeedbackProps) {
         ) : error ? (
           <div className="text-red-500 text-center">{error}</div>
         ) : feedback ? (
-          <>
-            <p className="text-gray-700">{feedback.message}</p>
-            <p className="text-xs text-gray-500 mt-2">
+          <div className="space-y-4">
+            <p className="text-gray-700">{showLongAnswer ? feedback.longAnswer : feedback.shortAnswer}</p>
+            <button
+              onClick={() => setShowLongAnswer(!showLongAnswer)}
+              className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200"
+            >
+              {showLongAnswer ? 'Weniger anzeigen' : 'Mehr anzeigen'}
+            </button>
+            <p className="text-xs text-gray-500">
               Letztes Update: {new Date(feedback.timestamp).toLocaleDateString()}
             </p>
-          </>
+          </div>
         ) : null}
       </div>
     </div>
