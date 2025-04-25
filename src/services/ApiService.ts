@@ -76,7 +76,8 @@ interface InterviewResponse {
 }
 
 class ApiService {
-  private static readonly BASE_URL = 'http://agent.floshodan.io:5678';
+  //private static readonly BASE_URL = 'http://agent.floshodan.io:5678';
+  private static readonly BASE_URL = 'http://localhost:5678';
 
   public static async sendChatMessage(params: ChatMessageParams): Promise<ChatResponse> {
     try {
