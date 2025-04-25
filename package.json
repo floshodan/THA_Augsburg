@@ -26,5 +26,5 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "proxy": "http://ai.floshodan.io:5678"
+  "proxy": "http://localhost:5678"
 }
