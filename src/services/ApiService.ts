@@ -76,8 +76,7 @@ interface InterviewResponse {
 }
 
 class ApiService {
-  //private static readonly BASE_URL = 'http://agent.floshodan.io:5678';
-  private static readonly BASE_URL = '';
+  private static readonly BASE_URL = 'http://agent.floshodan.io:5678';
 
   public static async sendChatMessage(params: ChatMessageParams): Promise<ChatResponse> {
     try {
@@ -123,7 +122,7 @@ class ApiService {
 
   public static async getGlobalFeedback(): Promise<GlobalFeedbackResponse> {
     try {
-      const targetUrl = `/webhook/1836e87e-4937-4db2-b8c0-6131d633a0a6`;
+      const targetUrl = `${this.BASE_URL}/webhook/1836e87e-4937-4db2-b8c0-6131d633a0a6`;
       console.log(targetUrl)
       const response = await fetch(targetUrl, {
         method: 'POST',
