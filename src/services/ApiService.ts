@@ -123,7 +123,9 @@ class ApiService {
 
   public static async getGlobalFeedback(): Promise<GlobalFeedbackResponse> {
     try {
-      const response = await fetch(`${this.BASE_URL}/webhook/1836e87e-4937-4db2-b8c0-6131d633a0a6`, {
+      const targetUrl = `${this.BASE_URL}/webhook/1836e87e-4937-4db2-b8c0-6131d633a0a6`;
+      console.log(targetUrl)
+      const response = await fetch(targetUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
