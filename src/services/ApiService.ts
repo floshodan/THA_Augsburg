@@ -23,11 +23,10 @@ interface ChatResponse {
 }
 
 interface CodeFeedbackParams {
-  task_description: string;
-  solution_code: string;
-  test_code: string;
-  submitted_code: string;
-  test_results: string;
+  title: string;
+  description: string;
+  tasks: string[];
+  progress: number;
 }
 
 interface CodeFeedbackResponse {

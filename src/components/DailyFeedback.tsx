@@ -76,10 +76,16 @@ export default function DailyFeedback({ day, onClose, onFeedbackLoaded }: DailyF
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const codeToSubmit = day.progress.percentage === 0 
-          ? emptyCode 
-          : (day.progress.percentage === 100 ? mockPositivCode : mockNegativeCode);
-        const response = await ApiService.getDailyFeedback(codeToSubmit);
+        //const codeToSubmit = day.progress.percentage === 0 
+        //  ? emptyCode 
+        //  : (day.progress.percentage === 100 ? mockPositivCode : mockNegativeCode);
+        const mockTask = {
+          title: day.title,
+          description: day.description,
+          tasks: day.tasks,
+          progress: day.progress.percentage
+        }
+        const response = await ApiService.getDailyFeedback(mockTask);
         setFeedback(response);
         setIsLoading(false);
         onFeedbackLoaded?.();
